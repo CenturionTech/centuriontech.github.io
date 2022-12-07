@@ -1,6 +1,6 @@
 // adding audio effects
 const audioPP = new Audio();
-audioPP.src = "../sounds/PinkPanther.mp3";
+audioPP.src = "./PinkPanther.mp3";
 
 var balls = document.getElementsByClassName("ball");
 
