@@ -1,5 +1,7 @@
 <html>
+   <title>Hanoi's Towers
 
+   </title>
 <head>
   <link rel="stylesheet" href="./style.css" />
 
@@ -7,16 +9,19 @@
 </head>
 
 <body>
-  <input id="numDisk">Disk</input>
+  <input id="numDisk">Total Disk</input>
   <br>
   <button onclick="makeMove()" width="40"> Make Move</button>
+  <button onclick="resolveHanoi()" width="40"> Resolve Hanoi</button>
+  <button style="background-color:red" onclick="initAll()" width="40"> Initialize</button>
   
-  
+
   <div class='game' id="game">
   </div>
 
   <script>
     var counter = 0;
+    var resolved = false;
 
     var pegs = [];
     var diskArray = []; // this stores the shaddow DOM disks 
@@ -34,7 +39,9 @@
               pegindex) // disk is the disk number where larger is wider disk
           })
         }
+        
       })
+      
     };
 
     function positionDisk(domdiv, diskNumber, indexOnPeg, pegindex) {
@@ -52,9 +59,7 @@
       domdiv.style.height = diskHeight;
       domdiv.innerHTML = '  ' + diskNumber;
     }
-    const sleep = (milliseconds) => {
-      return new Promise((resolve) => setTimeout(resolve, milliseconds));
-    };
+    
 
     function diskFactory(id, indexOnPeg, pegNumber, type) {
       // this determines start positions 
@@ -99,18 +104,46 @@
     function makeMove() {
       if (counter == 0) {
         const nDisks = document.getElementById("numDisk").value;
-        
+        if (nDisks < 2) {
+            alert('Enter a number of Disks > 1');
+            return;
+        }
         initialize(nDisks, pegMap);
         moveDisks(nDisks, "A", "C", "B");
         initializeDisks(pegHist[0]);
       }
       if (counter < pegHist.length) {
-        plotAll(pegHist[counter])
+        plotAll(pegHist[counter]);
+        
       } else {
-        alert('Tower is Finished')
+        alert('Tower is Finished');
+        resolved = true;
+
       }
       counter++;
     }
+
+    function resolveHanoi(){
+         
+           resolved = false;
+           makeMove();
+              
+              // const sleep = () => {
+              // return new Promise((resolve) => setTimeout(resolve, 2000));
+              //};
+      }
+
+      function initAll(){
+          counter = 0;
+          window.location.reload();
+      }
+              
+            
+    
+
+           
+        
+    
   </script>
 </body>
 

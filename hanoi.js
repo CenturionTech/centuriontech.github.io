@@ -25,10 +25,12 @@ const updateMapAndPlot = (pegMap, from, to) => {
 // disks are labeled 0 to N
 var moves = 0;
 const moveDisks = function (n, from, to, spare) {
+  
   if (n == 1) {
     updateMapAndPlot(pegMap, from, to);
     moves++;
   } else {
+    
     moveDisks(n - 1, from, spare, to);
     updateMapAndPlot(pegMap, from, to);
     moves++;
