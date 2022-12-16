@@ -11,9 +11,12 @@
 <body>
   <input id="numDisk">Total Disk</input>
   <br>
+  <input id="totMoves">Total Moves</input>
+  <br>
   <button onclick="makeMove()" width="40"> Make Move</button>
   <button onclick="resolveHanoi()" width="40"> Resolve Hanoi</button>
   <button style="background-color:red" onclick="initAll()" width="40"> Initialize</button>
+  <input id="checkSound" type="checkbox" checked=true>Sound</input>
   
 
   <div class='game' id="game">
@@ -33,7 +36,11 @@
 
 
     function playSound(sound) { 
-          sound.play() 
+      soundOn = document.getElementById("checkSound").checked;
+      
+      if (soundOn) {
+          sound.play();
+      }
     } 
 
     function plotAll(pegMap) {
@@ -118,6 +125,12 @@
             resolved = true;
             return;
         }
+        if (nDisks > 10) {
+            alert('Enter a number of Disks < 11');
+            resolved = true;
+            return;
+        }
+
         initialize(nDisks, pegMap);
         moveDisks(nDisks, "A", "C", "B");
         initializeDisks(pegHist[0]);
@@ -131,6 +144,8 @@
         return;
 
       }
+      
+      document.getElementById('totMoves').value = counter;
       counter++;
       resolved = false;
       playSound(bongSound);
@@ -141,7 +156,7 @@
            if (resolved) {
               return; 
           } else {
-            setTimeout(resolveHanoi,1000);
+            setTimeout(resolveHanoi,100);
           }
               
     }
