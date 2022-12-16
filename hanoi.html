@@ -63,7 +63,7 @@
     function positionDisk(domdiv, diskNumber, indexOnPeg, pegindex) {
 
       // set its position 
-      let pegCenter = 300 * pegindex + 100;
+      let pegCenter = 300 * pegindex + 200;
       let diskWidth = diskNumber * 40 + 20;
       let base = 400;
       let diskHeight = 20;
@@ -95,7 +95,7 @@
       let newdiv = document.createElement("div");
       newdiv.setAttribute('class', 'peg'); // these are the pegs
       newdiv.setAttribute('id', id)
-      let pegCenter = 300 * pegNumber + 60;
+      let pegCenter = 300 * pegNumber + 160;
       let base = 400;
       let diskHeight = 200;
       newdiv.style.left = pegCenter;
