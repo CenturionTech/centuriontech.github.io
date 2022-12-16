@@ -27,6 +27,15 @@
     var diskArray = []; // this stores the shaddow DOM disks 
     const game = document.getElementById('game');
 
+    // adding audio effects
+    const bongSound = new Audio();
+    bongSound.src = "./bong.mp3";
+
+
+    function playSound(sound) { 
+          sound.play() 
+    } 
+
     function plotAll(pegMap) {
       pegArray.map((peg, pegindex) => { // loop over all pegs
         let disks = pegMap[peg]; // the array of disks on pegMap.A say
@@ -121,27 +130,23 @@
 
       }
       counter++;
+      playSound(bongSound);
     }
 
-    function resolveHanoi(){
-         
-           resolved = false;
+    function resolveHanoi() {
            makeMove();
+           if (resolved) {
+              return; 
+          } else {
+            setTimeout(resolveHanoi,1000);
+          }
               
-              // const sleep = () => {
-              // return new Promise((resolve) => setTimeout(resolve, 2000));
-              //};
-      }
+    }
 
       function initAll(){
           counter = 0;
           window.location.reload();
       }
-              
-            
-    
-
-           
         
     
   </script>
