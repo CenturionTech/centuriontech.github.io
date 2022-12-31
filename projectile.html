@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>Balls Bouncing</title>
+</head>
+
+
+<link rel="stylesheet" type="text/css" href="./mystyle.css" />
+<script src="./ball.js"></script>
+
+<input id="numBalls">Total Balls...</input>
+<body>
+
+  <button onclick="factory()" width="40"> Create Balls</button>
+  <button onclick="update()" width="40"> Start Bounce</button>
+  <button style="background-color:red" onclick="initAll()" width="40"> Initialize</button>
+  <input id="checkSound" type="checkbox" checked=true>Sound</input>
+  
+  <div class="svg-container">
+    <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <rect
+        x="0"
+        y="0"
+        width="840"
+        height="455"
+        stroke="black"
+        fill="transparent"
+        stroke-width="5"
+      />
+    </svg>
+  </div>
+ 
+  <script>
+    const size = 30; // size of ball
+    const x = []; // position
+    const y = [];
+    const balls = []; // array to hold all free balls
+    const stepSize = 5; // step size every update
+    let velocity_x = [];
+    let velocity_y = [];
+    let gravity = 2;
+    // sounds section
+    const sound = new Audio();
+    sound.src = "./ping pong.wav";
+
+    function playSound() { 
+      soundOn = document.getElementById("checkSound").checked;
+      
+      if (soundOn) {
+          sound.play();
+            
+      } 
+    }
+
+    function checkWalls(i) {
+      if (x[i] < 0 || x[i] > 800) velocity_x[i] = -velocity_x[i];
+      if (y[i] > 400) {
+        velocity_y[i] = -velocity_y[i];
+        y[i] = 400;
+        // play sound of reach the bottom
+        playSound();
+      }
+    }
+
+    function update() {
+      for (let i = 0; i < balls.length; i++) {
+        x[i] += velocity_x[i];
+        velocity_y[i] += gravity;
+        y[i] += velocity_y[i];
+        checkWalls(i);
+
+        balls[i].style.left = x[i] + 'px';
+        balls[i].style.top = y[i]  + 'px';
+      }
+      
+      setTimeout(update, 50); // this calls update ever 1/10 second
+    }
+
+    function getRandom(scale) {
+      return Math.random() * scale;
+    }
+
+    function initAll(){
+          counter = 0;
+          window.location.reload();
+    }
+
+    function factory() {
+      // check how make balls exist already and add to the array
+      let n = balls.length;
+      let ballColor = 0;
+      let colors = ["red","blue","yellow","green","black"];
+      let total = document.getElementById("numBalls").value;
+      
+      for (let i = 0; i < total; i++) {
+        let velx = Math.floor(getRandom(20) - 10);
+        let vely = Math.floor(getRandom(20) - 10);
+        let ballColor = Math.floor(Math.random() * 5);
+
+        makeBall(getRandom(800), getRandom(400), colors[ballColor], velx, vely, 0);
+      }
+    
+
+    }
+  </script>
+ 
+
+  
+</body>
+</html>
