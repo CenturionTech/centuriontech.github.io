@@ -19,6 +19,7 @@
   <button style="background-color:red" onclick="initAll()" width="40"> Initialize</button>
   <input id="checkSound" type="checkbox" checked=true>Sound</input>
   
+ <!--
   <div class="svg-container">
     <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
       <rect
@@ -32,6 +33,10 @@
       />
     </svg>
   </div>
+-->
+
+
+
  
   <script>
     const size = 30; // size of ball
@@ -55,11 +60,13 @@
       } 
     }
 
+    //how comment in html?
+
     function checkWalls(i) {
-      if (x[i] < 0 || x[i] > 800) velocity_x[i] = -velocity_x[i];
-      if (y[i] > 400) {
+      if (x[i] < 0 || x[i] > (window.innerWidth - 50)) velocity_x[i] = -velocity_x[i];
+      if (y[i] < 0 || y[i] > (window.innerHeight - 50)) {
         velocity_y[i] = -velocity_y[i];
-        y[i] = 400;
+        y[i] = window.innerHeight - 50;
         // play sound of reach the bottom
         playSound();
       }
