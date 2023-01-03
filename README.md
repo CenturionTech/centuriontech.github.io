@@ -2,9 +2,9 @@
 
 ## Int3lltec Group WEB Dev Portfolio
 ### Title of the project: PacMen
-Description of the project: Create and move pacman figures across the screen
-How to Run: Select the link in Int3lltec Group WEB Dev Portfolio 
-Roadmap of future improvements: 
+Description of the project: Create and move pacman figures across the screen <br>
+How to Run: Select the link in Int3lltec Group WEB Dev Portfolio <br>
+Roadmap of future improvements: <br>
 
 <img src="PacMan1.png" width="10%" height="10%">
 
