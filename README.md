@@ -5,6 +5,7 @@
 Description of the project: Create and move pacman figures across the screen
 How to Run: Select the link in Int3lltec Group WEB Dev Portfolio 
 Roadmap of future improvements: 
+
 <img src="PacMan1.png">
 
 ### Title of the project: Eyes
