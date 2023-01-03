@@ -7,6 +7,8 @@ How to Run: Select the link in Int3lltec Group WEB Dev Portfolio <br>
 Roadmap of future improvements: <br>
 
 <img src="PacMan1.png" width="10%" height="10%">
+## PacMen Repository
+<a href="https://github.com/CenturionTech/pacmen">PacMen Exercise </a>
 
 ### Title of the project: Eyes
 Description of the project: Move Eyes on th screen following the mouse <br>
