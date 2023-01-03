@@ -1,6 +1,16 @@
 # centuriontech.github.io
-Int3lltec Group WEB Dev Portfolio
-Title of the project: Real Time Bus Tracker
+## Int3lltec Group WEB Dev Portfolio
+### Title of the project: PacMen
+Description of the project: Create and move pacman figures across the screen
+How to Run: Select the link in Int3lltec Group WEB Dev Portfolio 
+Roadmap of future improvements: 
+
+### Title of the project: Eyes
+Description of the project: Move Eyes on th screen following the mouse
+How to Run: Select the link in Int3lltec Group WEB Dev Portfolio 
+Roadmap of future improvements: 
+
+### Title of the project: Real Time Bus Tracker
 Description of the project: Show the Buses Locations in Route#1 of MBTA in real time
 How to Run: Select the link in Int3lltec Group WEB Dev Portfolio ,click on the button "Show MBTA Route# 1 Bus Locations in real time"
 Roadmap of future improvements: Show a table of current buses in Route#
