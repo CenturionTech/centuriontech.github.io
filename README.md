@@ -46,7 +46,7 @@ Roadmap of future improvements:
 
 <img src="BostonMapMarker.png" width="30%" height="30%">
 ## Boston Map Markers - MIT Repository
-<a href="#">MBTA Route#1 Tracking </a>
+<a href="#">Boston Map Markers - MIT </a>
 
 ### Title of the project: MBTA Real Time Bus Tracker
 Description of the project: In this exerise we use mapbox's API to Show the Buses Locations in Route#1 of MBTA in real time, we use await and fetch to load real time data from MBTA.<br>
