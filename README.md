@@ -39,6 +39,15 @@ Roadmap of future improvements: I added music in background for fun.<br>
 ## Eyes Repository
 <a href="https://github.com/CenturionTech/eyes">Eyes Exercise </a>
 
+### Title of the project: Boston Map Markers - MIT
+Description of the project: Show a Map Marker in MIT<br>
+How to Run: Select the link in Centurion Tech's Portfolio > Projects<br>
+Roadmap of future improvements: 
+
+<img src="BostonMapMarker.png" width="30%" height="30%">
+## Boston Map Markers - MIT Repository
+<a href="#">MBTA Route#1 Tracking </a>
+
 ### Title of the project: MBTA Real Time Bus Tracker
 Description of the project: In this exerise we use mapbox's API to Show the Buses Locations in Route#1 of MBTA in real time, we use await and fetch to load real time data from MBTA.<br>
 How to Run: Select the link in Centurion Tech's Portfolio > Projects ,click on the button "Show MBTA Route# 1 Bus Locations in real time" <br>
