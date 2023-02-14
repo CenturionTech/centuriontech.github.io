@@ -23,6 +23,7 @@ The submit button should have an ID submitBtn
 
 ## Screen captures from the browser
 <img src="formikapp1.png" width="30%" height="30%">
+<img src="formikapp4.png" width="30%" height="30%">
 <img src="formikapp2.png" width="30%" height="30%">
 <img src="formikapp3.png" width="30%" height="30%">
 
