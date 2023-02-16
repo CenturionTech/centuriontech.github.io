@@ -5,4 +5,4 @@ Roadmap of future improvements: <br>
 
 <img src="ToDoList.png" width="30%" height="30%">
 ## ToDo List Repository
-<a href="https://github.com/CenturionTech/balls">Balls Bouncing Exercise </a>
+<a href="https://github.com/CenturionTech/balls](https://github.com/CenturionTech/centuriontech.github.io/tree/main/ToDoList">ToDo List App </a>
