@@ -1,7 +1,9 @@
 ### Title of the project: ATM with Improvements...
 Description of the project: ATM with Improvements App in React <br>
 How to Run: Select the link in Centurion Tech's Portfolio > Projects <br>
-Roadmap of future improvements: <br>
+Improvements: <br> 
+1. Selection list for the type of operation (Deposit/Cash Back) <br>
+2. Validation for funds withdrawal<br>
 
 <img src="ATM_app.png" width="30%" height="30%">
 ## ToDo List Repository
