@@ -1,31 +1,29 @@
-function AllData() {
-  const ctx = React.useContext(UserContext);
+"use strict";
 
-  return (
-    <div className="container">
-      <h5 className="mb-4">All Data</h5>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Password</th>
-            <th scope="col">Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ctx.users.map((user, index) => (
-            <tr key={user.email} className={index % 2 === 0 ? "table-primary" : "table-secondary"}>
-              <th scope="row">{index + 1}</th>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.password}</td>
-              <td>{user.balance}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+var Route = ReactRouterDOM.Route;
+var Link = ReactRouterDOM.Link;
+var HashRouter = ReactRouterDOM.HashRouter;
+var UserContext = React.createContext(null);
+function Card(props) {
+  function classes() {
+    var bg = props.bgcolor ? ' bg-' + props.bgcolor : ' ';
+    var txt = props.txtcolor ? ' text-' + props.txtcolor : ' text-white';
+    return 'card mb-3 ' + bg + txt;
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: classes(),
+    style: {
+      maxWidth: "18rem"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "card-header"
+  }, props.header), /*#__PURE__*/React.createElement("div", {
+    className: "card-body"
+  }, props.title && /*#__PURE__*/React.createElement("h5", {
+    className: "card-title"
+  }, props.title), props.text && /*#__PURE__*/React.createElement("p", {
+    className: "card-text"
+  }, props.text), props.body, props.status && /*#__PURE__*/React.createElement("div", {
+    id: "createStatus"
+  }, props.status)));
 }
