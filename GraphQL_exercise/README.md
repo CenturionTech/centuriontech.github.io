@@ -12,8 +12,8 @@ description
 
 mutation setrestaurants {
 setrestaurant(input: {
-name: "Granite",
-description: "American"}) {
+name: "Margaritas",
+description: "Mexican"}) {
 name
 description
 }
