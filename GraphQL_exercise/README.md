@@ -3,7 +3,7 @@
 ## here are the query and mutation structures
 
 
-mutation editrestaurants($idd: Int = 1, $name: String = "OLDO"){
+mutation editrestaurants($idd: Int = 1, $name: String = "Aldos"){
 editrestaurant(id: $idd, name: $name){
 name
 description
