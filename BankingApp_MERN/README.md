@@ -1,5 +1,5 @@
 ### Title of the project: Banking App...
-Description of the project: Banking App in React <br>
+Description of the project: Banking App in MERN <br>
 Installation Guidelines: <br>
 How to Run: Select the link in Centurion Tech's Portfolio > Projects <br>
 Technology used: MERN full stack (MongoDB, Express, React, Node.js), AWS EC2
