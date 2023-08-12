@@ -1,21 +1,33 @@
-function AllData(){
-    const [data, setData] = React.useState([]);    
+function AllData() {
+  const [data, setData] = React.useState([]);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const itemsPerPage = 10;
 
-    React.useEffect(() => {
-        
-        // fetch all accounts from API
-        fetch('/account/all')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                
-                setData(data);
-                             
-            });
+  React.useEffect(() => {
+    // Fetch all accounts from API
+    fetch('/account/all')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setData(data);
+      });
+  }, []);
 
-    }, []);
-    
-return (
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const displayedData = data.slice(startIndex, endIndex);
+
+  function handleNextPage() {
+    setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
+  }
+
+  function handlePreviousPage() {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  }
+
+  return (
     <div className="container">
       <h5 className="mb-4">All Data</h5>
       <table className="table">
@@ -29,22 +41,23 @@ return (
           </tr>
         </thead>
         <tbody>
-        
-        
-
-        {data.map((user, index) => (
+          {displayedData.map((user, index) => (
             <tr key={user.email} className={index % 2 === 0 ? "table-primary" : "table-secondary"}>
-              <th scope="row">{index + 1}</th>
+              <th scope="row">{startIndex + index + 1}</th>
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.password}</td>
               <td>{user.balance}</td>
             </tr>
           ))}
-          
-           
         </tbody>
       </table>
+
+      <div className="text-center">
+        <button className="btn btn-light" onClick={handlePreviousPage} disabled={currentPage === 1}>Previous Page</button>
+        <span className="mx-3">Page {currentPage} of {totalPages}</span>
+        <button className="btn btn-light" onClick={handleNextPage} disabled={currentPage === totalPages}>Next Page</button>
+      </div>
     </div>
   );
 }

@@ -3,14 +3,21 @@ function Balance(){
   const [status, setStatus] = React.useState('');  
 
   return (
-    <Card
-      bgcolor="info"
-      header="Balance"
-      status={status}
-      body={show ?
-        <BalanceForm setShow={setShow} setStatus={setStatus}/> :
-        <BalanceMsg setShow={setShow} setStatus={setStatus}/>}
-    />
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ flex: 1 }}>
+      <Card
+        bgcolor="info"
+        header="Balance"
+        status={status}
+        body={show ?
+          <BalanceForm setShow={setShow} setStatus={setStatus}/> :
+          <BalanceMsg setShow={setShow} setStatus={setStatus}/>}
+      />
+      </div>
+      <div style={{ flex: 1 }}>
+        <img src="balance.gif" alt="Image" width="60%" />
+      </div>
+    </div>
   )
 
 }
