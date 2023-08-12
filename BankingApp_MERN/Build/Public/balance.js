@@ -15,7 +15,16 @@ function Balance() {
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     status = _React$useState4[0],
     setStatus = _React$useState4[1];
-  return /*#__PURE__*/React.createElement(Card, {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(Card, {
     bgcolor: "info",
     header: "Balance",
     status: status,
@@ -26,7 +35,15 @@ function Balance() {
       setShow: setShow,
       setStatus: setStatus
     })
-  });
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "balance.gif",
+    alt: "Image",
+    width: "60%"
+  })));
 }
 function BalanceMsg(props) {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h5", null, "Success"), /*#__PURE__*/React.createElement("button", {

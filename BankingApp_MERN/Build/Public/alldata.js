@@ -11,8 +11,13 @@ function AllData() {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     data = _React$useState2[0],
     setData = _React$useState2[1];
+  var _React$useState3 = React.useState(1),
+    _React$useState4 = _slicedToArray(_React$useState3, 2),
+    currentPage = _React$useState4[0],
+    setCurrentPage = _React$useState4[1];
+  var itemsPerPage = 10;
   React.useEffect(function () {
-    // fetch all accounts from API
+    // Fetch all accounts from API
     fetch('/account/all').then(function (response) {
       return response.json();
     }).then(function (data) {
@@ -20,6 +25,20 @@ function AllData() {
       setData(data);
     });
   }, []);
+  var totalPages = Math.ceil(data.length / itemsPerPage);
+  var startIndex = (currentPage - 1) * itemsPerPage;
+  var endIndex = startIndex + itemsPerPage;
+  var displayedData = data.slice(startIndex, endIndex);
+  function handleNextPage() {
+    setCurrentPage(function (prevPage) {
+      return Math.min(prevPage + 1, totalPages);
+    });
+  }
+  function handlePreviousPage() {
+    setCurrentPage(function (prevPage) {
+      return Math.max(prevPage - 1, 1);
+    });
+  }
   return /*#__PURE__*/React.createElement("div", {
     className: "container"
   }, /*#__PURE__*/React.createElement("h5", {
@@ -36,12 +55,24 @@ function AllData() {
     scope: "col"
   }, "Password"), /*#__PURE__*/React.createElement("th", {
     scope: "col"
-  }, "Balance"))), /*#__PURE__*/React.createElement("tbody", null, data.map(function (user, index) {
+  }, "Balance"))), /*#__PURE__*/React.createElement("tbody", null, displayedData.map(function (user, index) {
     return /*#__PURE__*/React.createElement("tr", {
       key: user.email,
       className: index % 2 === 0 ? "table-primary" : "table-secondary"
     }, /*#__PURE__*/React.createElement("th", {
       scope: "row"
-    }, index + 1), /*#__PURE__*/React.createElement("td", null, user.name), /*#__PURE__*/React.createElement("td", null, user.email), /*#__PURE__*/React.createElement("td", null, user.password), /*#__PURE__*/React.createElement("td", null, user.balance));
-  }))));
+    }, startIndex + index + 1), /*#__PURE__*/React.createElement("td", null, user.name), /*#__PURE__*/React.createElement("td", null, user.email), /*#__PURE__*/React.createElement("td", null, user.password), /*#__PURE__*/React.createElement("td", null, user.balance));
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "text-center"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-light",
+    onClick: handlePreviousPage,
+    disabled: currentPage === 1
+  }, "Previous Page"), /*#__PURE__*/React.createElement("span", {
+    className: "mx-3"
+  }, "Page ", currentPage, " of ", totalPages), /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-light",
+    onClick: handleNextPage,
+    disabled: currentPage === totalPages
+  }, "Next Page")));
 }

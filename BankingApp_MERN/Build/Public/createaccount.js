@@ -108,11 +108,20 @@ function CreateAccount() {
     setPassword('');
     setShow(true);
   }
-  return /*#__PURE__*/React.createElement(Card, {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(Card, {
     bgcolor: "primary",
     header: "Create Account",
     status: status,
-    body: show ? /*#__PURE__*/React.createElement(React.Fragment, null, "Name", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+    body: show ? /*#__PURE__*/React.createElement(React.Fragment, null, "Name:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
       type: "input",
       className: "form-control",
       id: "name",
@@ -121,7 +130,7 @@ function CreateAccount() {
       onChange: function onChange(e) {
         return setName(e.currentTarget.value);
       }
-    }), /*#__PURE__*/React.createElement("br", null), "Email address", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+    }), /*#__PURE__*/React.createElement("br", null), "Email address:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
       type: "input",
       className: "form-control",
       id: "email",
@@ -130,7 +139,7 @@ function CreateAccount() {
       onChange: function onChange(e) {
         return setEmail(e.currentTarget.value);
       }
-    }), /*#__PURE__*/React.createElement("br", null), "Password", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+    }), /*#__PURE__*/React.createElement("br", null), "Password:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
       type: "password",
       className: "form-control",
       id: "password",
@@ -148,5 +157,14 @@ function CreateAccount() {
       className: "btn btn-light",
       onClick: clearForm
     }, "Add another account"))
-  });
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "signup.gif",
+    alt: "Image",
+    width: "100%"
+  })));
 }
+;

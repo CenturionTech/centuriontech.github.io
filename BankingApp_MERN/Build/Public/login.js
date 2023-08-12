@@ -15,7 +15,16 @@ function Login() {
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     status = _React$useState4[0],
     setStatus = _React$useState4[1];
-  return /*#__PURE__*/React.createElement(Card, {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(Card, {
     bgcolor: "secondary",
     header: "Login",
     status: status,
@@ -26,7 +35,15 @@ function Login() {
       setShow: setShow,
       setStatus: setStatus
     })
-  });
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "login.gif",
+    alt: "Image",
+    width: "60%"
+  })));
 }
 function LoginMsg(props) {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h5", null, "Success"), /*#__PURE__*/React.createElement("button", {
@@ -91,7 +108,7 @@ function LoginForm(props) {
       }
     });
   }
-  return /*#__PURE__*/React.createElement(React.Fragment, null, "Email", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, "Email:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
     type: "input",
     className: "form-control",
     placeholder: "Enter email",
@@ -99,7 +116,7 @@ function LoginForm(props) {
     onChange: function onChange(e) {
       return setEmail(e.currentTarget.value);
     }
-  }), /*#__PURE__*/React.createElement("br", null), "Password", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+  }), /*#__PURE__*/React.createElement("br", null), "Password:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
     type: "password",
     className: "form-control",
     placeholder: "Enter password",

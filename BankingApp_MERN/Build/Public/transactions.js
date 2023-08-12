@@ -19,6 +19,11 @@ function Transactions() {
     _React$useState6 = _slicedToArray(_React$useState5, 2),
     selectedUser = _React$useState6[0],
     setSelectedUser = _React$useState6[1];
+  var _React$useState7 = React.useState(1),
+    _React$useState8 = _slicedToArray(_React$useState7, 2),
+    currentPage = _React$useState8[0],
+    setCurrentPage = _React$useState8[1];
+  var itemsPerPage = 10;
   React.useEffect(function () {
     // fetch transactions from API
     fetch('/account/transactions').then(function (response) {
@@ -26,8 +31,7 @@ function Transactions() {
     }).then(function (transactionsdata) {
       settransactionsData(transactionsdata);
     });
-  }, []);
-  React.useEffect(function () {
+
     // fetch users from API
     fetch('/account/all').then(function (response) {
       return response.json();
@@ -36,10 +40,27 @@ function Transactions() {
     });
   }, []);
 
-  // Filter transactions based on selected user
+  // Reset current page to 1 when selected user changes
+  React.useEffect(function () {
+    setCurrentPage(1);
+  }, [selectedUser]);
   var filteredTransactions = selectedUser ? transactionsdata.filter(function (transaction) {
     return transaction.email === selectedUser;
   }) : transactionsdata;
+  var totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  var startIndex = (currentPage - 1) * itemsPerPage;
+  var endIndex = startIndex + itemsPerPage;
+  var displayedTransactions = filteredTransactions.slice(startIndex, endIndex);
+  function handleNextPage() {
+    setCurrentPage(function (prevPage) {
+      return Math.min(prevPage + 1, totalPages);
+    });
+  }
+  function handlePreviousPage() {
+    setCurrentPage(function (prevPage) {
+      return Math.max(prevPage - 1, 1);
+    });
+  }
   return /*#__PURE__*/React.createElement("div", {
     className: "container"
   }, /*#__PURE__*/React.createElement("h5", {
@@ -74,12 +95,24 @@ function Transactions() {
     scope: "col"
   }, "Type"), /*#__PURE__*/React.createElement("th", {
     scope: "col"
-  }, "Amount"))), /*#__PURE__*/React.createElement("tbody", null, filteredTransactions.map(function (transaction, index) {
+  }, "Amount"))), /*#__PURE__*/React.createElement("tbody", null, displayedTransactions.map(function (transaction, index) {
     return /*#__PURE__*/React.createElement("tr", {
       key: transaction.dateTime,
       className: index % 2 === 0 ? "table-primary" : "table-secondary"
     }, /*#__PURE__*/React.createElement("th", {
       scope: "row"
-    }, index + 1), /*#__PURE__*/React.createElement("td", null, transaction.dateTime), /*#__PURE__*/React.createElement("td", null, transaction.email), /*#__PURE__*/React.createElement("td", null, transaction.typeTrans), /*#__PURE__*/React.createElement("td", null, transaction.amount));
-  }))));
+    }, startIndex + index + 1), /*#__PURE__*/React.createElement("td", null, transaction.dateTime), /*#__PURE__*/React.createElement("td", null, transaction.email), /*#__PURE__*/React.createElement("td", null, transaction.typeTrans), /*#__PURE__*/React.createElement("td", null, transaction.amount));
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "text-center"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-light",
+    onClick: handlePreviousPage,
+    disabled: currentPage === 1
+  }, "Previous Page"), /*#__PURE__*/React.createElement("span", {
+    className: "mx-3"
+  }, "Page ", currentPage, " of ", totalPages), /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-light",
+    onClick: handleNextPage,
+    disabled: currentPage === totalPages
+  }, "Next Page")));
 }
