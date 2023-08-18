@@ -1,12 +1,12 @@
 // navbar implementation using bootstrap
 
-const { useState, useEffect } = React;
-
-
-
 function NavBar() {
+  const { user, updateUserContext }   = useContext(UserContext);
   const [tooltipText, setTooltipText] = useState("");
-
+  const [userEmail, setUserEmail]     = useState('');
+  const [isLoggedIn, setIsLoggedIn]   = useState(false);
+  
+    
   const handleMouseEnter = (text) => {
     setTooltipText(text);
     console.log(text);
@@ -14,6 +14,23 @@ function NavBar() {
 
   const handleMouseLeave = () => {
     setTooltipText("");
+  };
+
+  function handleLogout() {
+    console.log('User: ' + user.UserEmail + ' is logged out' );
+    setUserEmail('');
+    setIsLoggedIn(false);
+
+    updateUserContext({ UserEmail: '', IsloggedIn: false });
+    
+    
+  };
+  
+  if (user != null) {
+    console.log("NavBar: " + user.UserEmail + " is logged in?: " , user.IsloggedIn ? "true": "false");
+    
+    //setUserEmail(user.UserEmail);
+    //setIsLoggedIn(user.IsLoggedIn);
   };
 
   useEffect(() => {
@@ -50,32 +67,40 @@ function NavBar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link"  href="#/CreateAccount/" data-tooltip="Create Account: Enter name, email and password.">Create Account</a>
+            <a className={`nav-link ${user.IsloggedIn ? 'disabled' : ''}`} href="#/CreateAccount/" data-tooltip="Create Account: Enter name, email and password.">Create Account</a>
             </li>
             
             <li className="nav-item">
-              <a className="nav-link" href="#/login/" data-tooltip="Login: Enter email and password to login">Login</a>
+            <a className={`nav-link ${user.IsloggedIn ? 'disabled' : ''}`} href="#/login/" data-tooltip="Login: Enter email and password to login">Login</a>
             </li>
 
-            <li className="nav-item">
-              <a className="nav-link" href="#/deposit/" data-tooltip="Deposit: Select a user and enter the deposit amount">Deposit</a>
-            </li>
-
-            <li className="nav-item">
-              <a className="nav-link" href="#/withdraw/" data-tooltip="Withdraw: Select a user and enter the withdraw amount">Withdraw</a>
-            </li>
-
-            <li className="nav-item">
-              <a className="nav-link" href="#/balance/" data-tooltip="Balance: Select a user to show balance">Balance</a>
-            </li>
-
-            <li className="nav-item">
-              <a className="nav-link" href="#/alldata/" data-tooltip="All Data: Show all data stored from the accounts created">All Data</a>
-            </li>
-
-            <li className="nav-item">
-              <a className="nav-link" href="#/transactions/" data-tooltip="Transactions: Show all transactions stored from users">Transactions</a>
-            </li>
+            {user.IsloggedIn && (
+              <>
+                
+                {/* Enable other menu items */}
+                <li className="nav-item">
+                  <a className="nav-link" href="#/deposit/" data-tooltip="Deposit: Select a user and enter the deposit amount">Deposit</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#/withdraw/" data-tooltip="Withdraw: Select a user and enter the withdraw amount">Withdraw</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#/balance/" data-tooltip="Balance: Select a user to show balance">Balance</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#/alldata/" data-tooltip="All Data: Show all data stored from the accounts created">All Data</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#/transactions/" data-tooltip="Transactions: Show all transactions stored from users">Transactions</a>
+                </li>
+                <li className="nav-item">
+                <a className="nav-link" href="#">Welcome: {user.UserEmail}</a>
+                </li>
+                <li className="nav-item">
+                <a className="nav-link" href="#" onClick={() => handleLogout()} data-tooltip="Logout current user">Logout</a>
+                </li>
+              </>
+            )}
           </ul>
         </div>
         </div>

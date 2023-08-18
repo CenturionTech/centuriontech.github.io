@@ -37,10 +37,18 @@ function BalanceMsg(props){
 }
 
 function BalanceForm(props){
-  const [email, setEmail]   = React.useState('');
+  const { user, updateUserContext } = React.useContext(UserContext);
+  var [email, setEmail]   = React.useState('');
   const [balance, setBalance] = React.useState('');  
-
+    
   function validate(field, label, setStatus) {
+
+    if (!field && user.UserEmail != '') {
+      field = user.UserEmail;
+      email = field;
+      console.log(email);
+    }
+
     if (!field) {
       setStatus('Error: ' + label + " is left blank");
       setTimeout(() => setStatus(''), 3000);
@@ -94,7 +102,7 @@ function BalanceForm(props){
     Email<br/>
     <input type="input" 
       className="form-control" 
-      placeholder="Enter email" 
+      placeholder= {user.IsloggedIn ? user.UserEmail : "Enter email"}
       value={email} 
       onChange={e => setEmail(e.currentTarget.value)}/><br/>
 

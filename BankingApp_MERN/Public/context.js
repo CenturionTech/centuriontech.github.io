@@ -1,7 +1,12 @@
-const Route       = ReactRouterDOM.Route;
-const Link        = ReactRouterDOM.Link;
-const HashRouter  = ReactRouterDOM.HashRouter;
-const UserContext = React.createContext(null);
+// context.js
+
+const { useState , useEffect, useContext, createContext} = React;
+const Route        = ReactRouterDOM.Route;
+const Link         = ReactRouterDOM.Link;
+const HashRouter   = ReactRouterDOM.HashRouter;
+var UserContext    = createContext(null);
+
+
 
 function Card(props){
   function classes(){

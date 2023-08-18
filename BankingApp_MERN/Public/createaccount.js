@@ -1,10 +1,12 @@
+// createaccount.js
+
 function CreateAccount(){
   const [show, setShow]         = React.useState(true);
   const [status, setStatus]     = React.useState('');
   const [name, setName]         = React.useState('');
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
-  const ctx                     = React.useContext(UserContext);   
+  const { user, updateUserContext }   = useContext(UserContext);
   
 
   function validate(field, label) {
@@ -49,9 +51,13 @@ function CreateAccount(){
            setShow(true);   
         }
         else {
-          ctx.users.push({name,email,password,balance:0});
-          console.log(ctx);
+          
+          updateUserContext({ UserEmail: email, IsloggedIn: true });
+
+          console.log('User: ' + email + ' is logged in' );
+
           setShow(false);
+          
         }
     })();
     
@@ -90,7 +96,7 @@ function CreateAccount(){
         />
       </div>
       <div style={{ flex: 1 }}>
-        <img src="signup.gif" alt="Image" width="100%" />
+        <img src="signup.gif" alt="Image" width="58%" />
       </div>
     </div>
   );

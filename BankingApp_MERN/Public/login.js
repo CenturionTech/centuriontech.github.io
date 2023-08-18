@@ -1,6 +1,11 @@
+// login.js
+
+
 function Login() {
+  
   const [show, setShow] = React.useState(true);
   const [status, setStatus] = React.useState('');
+  
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -35,6 +40,7 @@ function LoginMsg(props){
 }
 
 function LoginForm(props){
+  const { user, updateUserContext } = React.useContext(UserContext);
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -65,6 +71,8 @@ function LoginForm(props){
   }
 
   function handle(){
+    
+
     console.log(email,password);
     if (!validate(email,    'email', props.setStatus))    return;
     if (!validate(password, 'password', props.setStatus)) return;
@@ -76,10 +84,20 @@ function LoginForm(props){
             const data = JSON.parse(text);
             props.setStatus('');
             props.setShow(false);
+
+            // Update the userEmail and isLoggedIn states through the context
+           
+            updateUserContext({ UserEmail: email, IsloggedIn: true });
+                        
             console.log('JSON:', data);
+            text = 'User: ' + email + ' is logged in';
+            console.log(text);
+            props.setStatus(text);
+                                  
+            
         } catch(err) {
             props.setStatus(text)
-            console.log('err:', text);
+            console.log('err:' + err, text);
         }
     });
   }
