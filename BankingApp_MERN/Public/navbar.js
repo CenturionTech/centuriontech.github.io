@@ -28,14 +28,13 @@ function NavBar() {
   
   if (user != null) {
     console.log("NavBar: " + user.UserEmail + " is logged in?: " , user.IsloggedIn ? "true": "false");
-    
-    //setUserEmail(user.UserEmail);
-    //setIsLoggedIn(user.IsLoggedIn);
+        
   };
 
   useEffect(() => {
-    const navLinks = document.querySelectorAll(".nav-link");
+  const navLinks = document.querySelectorAll(".nav-link");
 
+  const addEventListeners = () => {
     navLinks.forEach((link) => {
       const text = link.getAttribute("data-tooltip");
       if (text) {
@@ -43,17 +42,33 @@ function NavBar() {
         link.addEventListener("mouseleave", handleMouseLeave);
       }
     });
+  };
 
-    return () => {
-      navLinks.forEach((link) => {
-        const text = link.getAttribute("data-tooltip");
-        if (text) {
-          link.removeEventListener("mouseenter", () => handleMouseEnter(text));
-          link.removeEventListener("mouseleave", handleMouseLeave);
-        }
-      });
-    };
-  }, []);
+  const removeEventListeners = () => {
+    navLinks.forEach((link) => {
+      const text = link.getAttribute("data-tooltip");
+      if (text) {
+        link.removeEventListener("mouseenter", () => handleMouseEnter(text));
+        link.removeEventListener("mouseleave", handleMouseLeave);
+      }
+    });
+  };
+
+  // Add event listeners initially
+  addEventListeners();
+
+  // If user.IsloggedIn changes, update event listeners
+  if (user.IsloggedIn) {
+    addEventListeners();
+  } else {
+    removeEventListeners();
+  }
+
+  // Cleanup function
+  return () => {
+    removeEventListeners();
+  };
+}, [user.IsloggedIn]);
 
   return (
     <>
