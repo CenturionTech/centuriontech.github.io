@@ -84,7 +84,7 @@ function Transactions() {
               <td>{transaction.dateTime}</td>
               <td>{transaction.email}</td>
               <td>{transaction.typeTrans}</td>
-              <td>{transaction.amount}</td>
+              <td>${transaction.amount.toFixed(2)}</td>
             </tr>
           ))}
         </tbody>

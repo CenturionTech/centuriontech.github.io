@@ -85,7 +85,7 @@ function BalanceForm(props){
         try {
             
             const data = JSON.parse(text);
-            props.setStatus(data.name + '  ---> Balance: ' + data.balance);
+            props.setStatus(data.name + '  ---> Balance: $' + data.balance.toFixed(2));
             props.setShow(false);
             setBalance(data.balance);
             console.log('Balance:', data.balance);

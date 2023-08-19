@@ -3,7 +3,6 @@ function Deposit() {
   const [depositAmount, setDepositAmount] = React.useState("");
   const [status, setStatus] = React.useState("");
   const [data, setData] = React.useState([]);  
-
   
 
   React.useEffect(() => {
@@ -62,7 +61,8 @@ function Deposit() {
     });
 
     user.balance = newBalance;
-    setStatus(`Successfully deposited ${depositAmount} into ${selectedUser}'s account`);
+    const depositAmt = "Successfully deposited $" + parseInt(depositAmount).toFixed(2) + " into " + selectedUser + "'s account"; 
+    setStatus(depositAmt);
     setDepositAmount("");
     setTimeout(() => setStatus(""), 3000);
   }

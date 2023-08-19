@@ -64,6 +64,8 @@ function NavBar() {
     removeEventListeners();
   }
 
+  if (!user.IsloggedIn) {addEventListeners()}
+
   // Cleanup function
   return () => {
     removeEventListeners();

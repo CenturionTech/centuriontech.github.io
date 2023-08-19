@@ -62,7 +62,8 @@ function Withdraw() {
     });
 
     user.balance = newBalance;
-    setStatus(`Successfully withdrawed ${withdrawAmount} into ${selectedUser}'s account`);
+    const withdrawAmt = "Successfully withdrawed $" + parseInt(withdrawAmount).toFixed(2) + " into " + selectedUser + "'s account"; 
+    setStatus(withdrawAmt);
     setWithdrawAmount("");
     setTimeout(() => setStatus(""), 3000);
   }
