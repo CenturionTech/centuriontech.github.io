@@ -1,9 +1,16 @@
 "use strict";
 
+// context.js
+
+var _React = React,
+  useState = _React.useState,
+  useEffect = _React.useEffect,
+  useContext = _React.useContext,
+  createContext = _React.createContext;
 var Route = ReactRouterDOM.Route;
 var Link = ReactRouterDOM.Link;
 var HashRouter = ReactRouterDOM.HashRouter;
-var UserContext = React.createContext(null);
+var UserContext = createContext(null);
 function Card(props) {
   function classes() {
     var bg = props.bgcolor ? ' bg-' + props.bgcolor : ' ';

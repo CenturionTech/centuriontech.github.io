@@ -79,7 +79,8 @@ function Withdraw() {
       }
     });
     user.balance = newBalance;
-    setStatus("Successfully withdrawed ".concat(withdrawAmount, " into ").concat(selectedUser, "'s account"));
+    var withdrawAmt = "Successfully withdrawed $" + parseInt(withdrawAmount).toFixed(2) + " into " + selectedUser + "'s account";
+    setStatus(withdrawAmt);
     setWithdrawAmount("");
     setTimeout(function () {
       return setStatus("");

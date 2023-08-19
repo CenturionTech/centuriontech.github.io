@@ -6,6 +6,8 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+// login.js
+
 function Login() {
   var _React$useState = React.useState(true),
     _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -55,6 +57,9 @@ function LoginMsg(props) {
   }, "Authenticate again"));
 }
 function LoginForm(props) {
+  var _React$useContext = React.useContext(UserContext),
+    user = _React$useContext.user,
+    updateUserContext = _React$useContext.updateUserContext;
   var _React$useState5 = React.useState(''),
     _React$useState6 = _slicedToArray(_React$useState5, 2),
     email = _React$useState6[0],
@@ -101,10 +106,20 @@ function LoginForm(props) {
         var data = JSON.parse(text);
         props.setStatus('');
         props.setShow(false);
+
+        // Update the userEmail and isLoggedIn states through the context
+
+        updateUserContext({
+          UserEmail: email,
+          IsloggedIn: true
+        });
         console.log('JSON:', data);
+        text = 'User: ' + email + ' is logged in';
+        console.log(text);
+        props.setStatus(text);
       } catch (err) {
         props.setStatus(text);
-        console.log('err:', text);
+        console.log('err:' + err, text);
       }
     });
   }

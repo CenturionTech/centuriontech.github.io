@@ -23,6 +23,9 @@ function Deposit() {
     _React$useState8 = _slicedToArray(_React$useState7, 2),
     data = _React$useState8[0],
     setData = _React$useState8[1];
+  var _React$useContext = React.useContext(UserContext),
+    user = _React$useContext.user,
+    updateUserContext = _React$useContext.updateUserContext;
   React.useEffect(function () {
     // fetch all accounts from API
     fetch('/account/all').then(function (response) {
@@ -79,7 +82,8 @@ function Deposit() {
       }
     });
     user.balance = newBalance;
-    setStatus("Successfully deposited ".concat(depositAmount, " into ").concat(selectedUser, "'s account"));
+    var depositAmt = "Successfully deposited $" + parseInt(depositAmount).toFixed(2) + " into " + selectedUser + "'s account";
+    setStatus(depositAmt);
     setDepositAmount("");
     setTimeout(function () {
       return setStatus("");

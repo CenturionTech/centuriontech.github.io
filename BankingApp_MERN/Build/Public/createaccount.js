@@ -10,6 +10,8 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+// createaccount.js
+
 function CreateAccount() {
   var _React$useState = React.useState(true),
     _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -31,7 +33,9 @@ function CreateAccount() {
     _React$useState10 = _slicedToArray(_React$useState9, 2),
     password = _React$useState10[0],
     setPassword = _React$useState10[1];
-  var ctx = React.useContext(UserContext);
+  var _useContext = useContext(UserContext),
+    user = _useContext.user,
+    updateUserContext = _useContext.updateUserContext;
   function validate(field, label) {
     if (!field) {
       setStatus('Error: ' + label + " is left blank");
@@ -86,13 +90,11 @@ function CreateAccount() {
               }, 3000);
               setShow(true);
             } else {
-              ctx.users.push({
-                name: name,
-                email: email,
-                password: password,
-                balance: 0
+              updateUserContext({
+                UserEmail: email,
+                IsloggedIn: true
               });
-              console.log(ctx);
+              console.log('User: ' + email + ' is logged in');
               setShow(false);
             }
           case 8:
@@ -164,7 +166,7 @@ function CreateAccount() {
   }, /*#__PURE__*/React.createElement("img", {
     src: "signup.gif",
     alt: "Image",
-    width: "100%"
+    width: "58%"
   })));
 }
 ;

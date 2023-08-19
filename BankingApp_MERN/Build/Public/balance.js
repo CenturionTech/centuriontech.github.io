@@ -56,6 +56,9 @@ function BalanceMsg(props) {
   }, "Check balance again"));
 }
 function BalanceForm(props) {
+  var _React$useContext = React.useContext(UserContext),
+    user = _React$useContext.user,
+    updateUserContext = _React$useContext.updateUserContext;
   var _React$useState5 = React.useState(''),
     _React$useState6 = _slicedToArray(_React$useState5, 2),
     email = _React$useState6[0],
@@ -65,6 +68,11 @@ function BalanceForm(props) {
     balance = _React$useState8[0],
     setBalance = _React$useState8[1];
   function validate(field, label, setStatus) {
+    if (!field && user.UserEmail != '') {
+      field = user.UserEmail;
+      email = field;
+      console.log(email);
+    }
     if (!field) {
       setStatus('Error: ' + label + " is left blank");
       setTimeout(function () {
@@ -99,7 +107,7 @@ function BalanceForm(props) {
     }).then(function (text) {
       try {
         var data = JSON.parse(text);
-        props.setStatus(data.name + '  ---> Balance: ' + data.balance);
+        props.setStatus(data.name + '  ---> Balance: $' + data.balance.toFixed(2));
         props.setShow(false);
         setBalance(data.balance);
         console.log('Balance:', data.balance);
@@ -113,7 +121,7 @@ function BalanceForm(props) {
   return /*#__PURE__*/React.createElement(React.Fragment, null, "Email", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
     type: "input",
     className: "form-control",
-    placeholder: "Enter email",
+    placeholder: user.IsloggedIn ? user.UserEmail : "Enter email",
     value: email,
     onChange: function onChange(e) {
       return setEmail(e.currentTarget.value);

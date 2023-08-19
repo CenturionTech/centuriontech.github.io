@@ -101,7 +101,7 @@ function Transactions() {
       className: index % 2 === 0 ? "table-primary" : "table-secondary"
     }, /*#__PURE__*/React.createElement("th", {
       scope: "row"
-    }, startIndex + index + 1), /*#__PURE__*/React.createElement("td", null, transaction.dateTime), /*#__PURE__*/React.createElement("td", null, transaction.email), /*#__PURE__*/React.createElement("td", null, transaction.typeTrans), /*#__PURE__*/React.createElement("td", null, transaction.amount));
+    }, startIndex + index + 1), /*#__PURE__*/React.createElement("td", null, transaction.dateTime), /*#__PURE__*/React.createElement("td", null, transaction.email), /*#__PURE__*/React.createElement("td", null, transaction.typeTrans), /*#__PURE__*/React.createElement("td", null, "$", transaction.amount.toFixed(2)));
   }))), /*#__PURE__*/React.createElement("div", {
     className: "text-center"
   }, /*#__PURE__*/React.createElement("button", {

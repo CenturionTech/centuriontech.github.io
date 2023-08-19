@@ -8,14 +8,22 @@ function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefine
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 // navbar implementation using bootstrap
 
-var _React = React,
-  useState = _React.useState,
-  useEffect = _React.useEffect;
 function NavBar() {
+  var _useContext = useContext(UserContext),
+    user = _useContext.user,
+    updateUserContext = _useContext.updateUserContext;
   var _useState = useState(""),
     _useState2 = _slicedToArray(_useState, 2),
     tooltipText = _useState2[0],
     setTooltipText = _useState2[1];
+  var _useState3 = useState(''),
+    _useState4 = _slicedToArray(_useState3, 2),
+    userEmail = _useState4[0],
+    setUserEmail = _useState4[1];
+  var _useState5 = useState(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    isLoggedIn = _useState6[0],
+    setIsLoggedIn = _useState6[1];
   var handleMouseEnter = function handleMouseEnter(text) {
     setTooltipText(text);
     console.log(text);
@@ -23,18 +31,34 @@ function NavBar() {
   var handleMouseLeave = function handleMouseLeave() {
     setTooltipText("");
   };
+  function handleLogout() {
+    console.log('User: ' + user.UserEmail + ' is logged out');
+    setUserEmail('');
+    setIsLoggedIn(false);
+    updateUserContext({
+      UserEmail: '',
+      IsloggedIn: false
+    });
+  }
+  ;
+  if (user != null) {
+    console.log("NavBar: " + user.UserEmail + " is logged in?: ", user.IsloggedIn ? "true" : "false");
+  }
+  ;
   useEffect(function () {
     var navLinks = document.querySelectorAll(".nav-link");
-    navLinks.forEach(function (link) {
-      var text = link.getAttribute("data-tooltip");
-      if (text) {
-        link.addEventListener("mouseenter", function () {
-          return handleMouseEnter(text);
-        });
-        link.addEventListener("mouseleave", handleMouseLeave);
-      }
-    });
-    return function () {
+    var addEventListeners = function addEventListeners() {
+      navLinks.forEach(function (link) {
+        var text = link.getAttribute("data-tooltip");
+        if (text) {
+          link.addEventListener("mouseenter", function () {
+            return handleMouseEnter(text);
+          });
+          link.addEventListener("mouseleave", handleMouseLeave);
+        }
+      });
+    };
+    var removeEventListeners = function removeEventListeners() {
       navLinks.forEach(function (link) {
         var text = link.getAttribute("data-tooltip");
         if (text) {
@@ -45,7 +69,25 @@ function NavBar() {
         }
       });
     };
-  }, []);
+
+    // Add event listeners initially
+    addEventListeners();
+
+    // If user.IsloggedIn changes, update event listeners
+    if (user.IsloggedIn) {
+      addEventListeners();
+    } else {
+      removeEventListeners();
+    }
+    if (!user.IsloggedIn) {
+      addEventListeners();
+    }
+
+    // Cleanup function
+    return function () {
+      removeEventListeners();
+    };
+  }, [user.IsloggedIn]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("nav", {
     className: "navbar navbar-expand-lg navbar-light bg-light"
   }, /*#__PURE__*/React.createElement("div", {
@@ -71,16 +113,16 @@ function NavBar() {
   }, /*#__PURE__*/React.createElement("li", {
     className: "nav-item"
   }, /*#__PURE__*/React.createElement("a", {
-    className: "nav-link",
+    className: "nav-link ".concat(user.IsloggedIn ? 'disabled' : ''),
     href: "#/CreateAccount/",
     "data-tooltip": "Create Account: Enter name, email and password."
   }, "Create Account")), /*#__PURE__*/React.createElement("li", {
     className: "nav-item"
   }, /*#__PURE__*/React.createElement("a", {
-    className: "nav-link",
+    className: "nav-link ".concat(user.IsloggedIn ? 'disabled' : ''),
     href: "#/login/",
     "data-tooltip": "Login: Enter email and password to login"
-  }, "Login")), /*#__PURE__*/React.createElement("li", {
+  }, "Login")), user.IsloggedIn && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("li", {
     className: "nav-item"
   }, /*#__PURE__*/React.createElement("a", {
     className: "nav-link",
@@ -110,7 +152,21 @@ function NavBar() {
     className: "nav-link",
     href: "#/transactions/",
     "data-tooltip": "Transactions: Show all transactions stored from users"
-  }, "Transactions")))))), tooltipText && /*#__PURE__*/React.createElement("div", {
+  }, "Transactions")), /*#__PURE__*/React.createElement("li", {
+    className: "nav-item"
+  }, /*#__PURE__*/React.createElement("a", {
+    className: "nav-link",
+    href: "#"
+  }, "Welcome: ", user.UserEmail)), /*#__PURE__*/React.createElement("li", {
+    className: "nav-item"
+  }, /*#__PURE__*/React.createElement("a", {
+    className: "nav-link",
+    href: "#",
+    onClick: function onClick() {
+      return handleLogout();
+    },
+    "data-tooltip": "Logout current user"
+  }, "Logout"))))))), tooltipText && /*#__PURE__*/React.createElement("div", {
     className: "tooltip",
     style: {
       left: "50%"

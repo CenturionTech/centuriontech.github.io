@@ -61,7 +61,7 @@ function AllData() {
       className: index % 2 === 0 ? "table-primary" : "table-secondary"
     }, /*#__PURE__*/React.createElement("th", {
       scope: "row"
-    }, startIndex + index + 1), /*#__PURE__*/React.createElement("td", null, user.name), /*#__PURE__*/React.createElement("td", null, user.email), /*#__PURE__*/React.createElement("td", null, user.password), /*#__PURE__*/React.createElement("td", null, user.balance));
+    }, startIndex + index + 1), /*#__PURE__*/React.createElement("td", null, user.name), /*#__PURE__*/React.createElement("td", null, user.email), /*#__PURE__*/React.createElement("td", null, user.password), /*#__PURE__*/React.createElement("td", null, "$", user.balance.toFixed(2)));
   }))), /*#__PURE__*/React.createElement("div", {
     className: "text-center"
   }, /*#__PURE__*/React.createElement("button", {
