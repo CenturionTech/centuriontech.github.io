@@ -48,7 +48,7 @@ function Transactions() {
     <div className="container">
       <h5 className="mb-4">Transactions</h5>
       <div className="form-group">
-        <label htmlFor="userSelect">Select User</label>
+        <label htmlFor="userSelect">Select User.... Total Records: {usersdata.length}</label>
         <select
           className="form-control"
           id="userSelect"
@@ -84,7 +84,10 @@ function Transactions() {
               <td>{transaction.dateTime}</td>
               <td>{transaction.email}</td>
               <td>{transaction.typeTrans}</td>
-              <td>${transaction.amount.toFixed(2)}</td>
+              <td>${transaction.amount.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2})}</td>
             </tr>
           ))}
         </tbody>
@@ -94,6 +97,7 @@ function Transactions() {
         <button className="btn btn-light" onClick={handlePreviousPage} disabled={currentPage === 1}>Previous Page</button>
         <span className="mx-3">Page {currentPage} of {totalPages}</span>
         <button className="btn btn-light" onClick={handleNextPage} disabled={currentPage === totalPages}>Next Page</button>
+        <span className="mx-3">Total Transactions: {filteredTransactions.length}</span>
       </div>
     </div>
   );

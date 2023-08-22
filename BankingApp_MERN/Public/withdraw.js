@@ -62,7 +62,11 @@ function Withdraw() {
     });
 
     user.balance = newBalance;
-    const withdrawAmt = "Successfully withdrawed $" + parseInt(withdrawAmount).toFixed(2) + " into " + selectedUser + "'s account"; 
+    const withdrawFormatted = withdrawAmount.toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2});
+    const withdrawAmt = "Successfully withdrawed $" + withdrawFormatted + " into " + selectedUser + "'s account"; 
     setStatus(withdrawAmt);
     setWithdrawAmount("");
     setTimeout(() => setStatus(""), 3000);
@@ -71,13 +75,17 @@ function Withdraw() {
   return (
     <div className="container mt-3">
       <h5>Withdraw</h5>
+      <img src="deposit_withdraw.gif" alt="Image" width="20%" />
       <form>
         <div className="form-group">
-          <label htmlFor="userSelect">Select User</label>
+          <label htmlFor="userSelect">Select User.... Total Records: {data.length}</label>
           <select className="form-control" id="userSelect" value={selectedUser} onChange={e => setSelectedUser(e.currentTarget.value)}>
             <option value="">-- Select user --</option>
             {data.map(user => (
-              <option key={user.email} value={user.email}>{user.email} - ${user.balance.toFixed(2)}</option>
+              <option key={user.email} value={user.email}>{user.email} - ${user.balance.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2})}</option>
             ))}
           </select>
         </div>

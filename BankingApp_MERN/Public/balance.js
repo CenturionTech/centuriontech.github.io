@@ -85,7 +85,12 @@ function BalanceForm(props){
         try {
             
             const data = JSON.parse(text);
-            props.setStatus(data.name + '  ---> Balance: $' + data.balance.toFixed(2));
+            const balanceFormatted = data.balance.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2});
+
+            props.setStatus(data.name + '  ---> Balance: $' + balanceFormatted);
             props.setShow(false);
             setBalance(data.balance);
             console.log('Balance:', data.balance);

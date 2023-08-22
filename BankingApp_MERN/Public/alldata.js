@@ -13,9 +13,11 @@ function AllData() {
       });
   }, []);
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const totalRecords = data.length;
+  const totalPages   = Math.ceil(totalRecords / itemsPerPage);
+  const startIndex   = (currentPage - 1) * itemsPerPage;
+  const endIndex     = startIndex + itemsPerPage;
+  
 
   const displayedData = data.slice(startIndex, endIndex);
 
@@ -29,7 +31,7 @@ function AllData() {
 
   return (
     <div className="container">
-      <h5 className="mb-4">All Data</h5>
+      <h5 className="mb-4">All Data ... Total Records: {totalRecords}</h5>
       <table className="table">
         <thead>
           <tr>
@@ -47,7 +49,10 @@ function AllData() {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.password}</td>
-              <td>${user.balance.toFixed(2)}</td>
+              <td>${user.balance.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2})}</td>
             </tr>
           ))}
         </tbody>
