@@ -25,7 +25,8 @@ function AllData() {
       setData(data);
     });
   }, []);
-  var totalPages = Math.ceil(data.length / itemsPerPage);
+  var totalRecords = data.length;
+  var totalPages = Math.ceil(totalRecords / itemsPerPage);
   var startIndex = (currentPage - 1) * itemsPerPage;
   var endIndex = startIndex + itemsPerPage;
   var displayedData = data.slice(startIndex, endIndex);
@@ -43,7 +44,7 @@ function AllData() {
     className: "container"
   }, /*#__PURE__*/React.createElement("h5", {
     className: "mb-4"
-  }, "All Data"), /*#__PURE__*/React.createElement("table", {
+  }, "All Data ... Total Records: ", totalRecords), /*#__PURE__*/React.createElement("table", {
     className: "table"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
     scope: "col"
@@ -61,7 +62,11 @@ function AllData() {
       className: index % 2 === 0 ? "table-primary" : "table-secondary"
     }, /*#__PURE__*/React.createElement("th", {
       scope: "row"
-    }, startIndex + index + 1), /*#__PURE__*/React.createElement("td", null, user.name), /*#__PURE__*/React.createElement("td", null, user.email), /*#__PURE__*/React.createElement("td", null, user.password), /*#__PURE__*/React.createElement("td", null, "$", user.balance.toFixed(2)));
+    }, startIndex + index + 1), /*#__PURE__*/React.createElement("td", null, user.name), /*#__PURE__*/React.createElement("td", null, user.email), /*#__PURE__*/React.createElement("td", null, user.password), /*#__PURE__*/React.createElement("td", null, "$", user.balance.toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })));
   }))), /*#__PURE__*/React.createElement("div", {
     className: "text-center"
   }, /*#__PURE__*/React.createElement("button", {

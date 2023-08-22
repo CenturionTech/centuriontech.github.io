@@ -23,9 +23,6 @@ function Deposit() {
     _React$useState8 = _slicedToArray(_React$useState7, 2),
     data = _React$useState8[0],
     setData = _React$useState8[1];
-  var _React$useContext = React.useContext(UserContext),
-    user = _React$useContext.user,
-    updateUserContext = _React$useContext.updateUserContext;
   React.useEffect(function () {
     // fetch all accounts from API
     fetch('/account/all').then(function (response) {
@@ -82,7 +79,12 @@ function Deposit() {
       }
     });
     user.balance = newBalance;
-    var depositAmt = "Successfully deposited $" + parseInt(depositAmount).toFixed(2) + " into " + selectedUser + "'s account";
+    var depositFormatted = depositAmount.toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    var depositAmt = "Successfully deposited $" + depositFormatted + " into " + selectedUser + "'s account";
     setStatus(depositAmt);
     setDepositAmount("");
     setTimeout(function () {
@@ -91,11 +93,15 @@ function Deposit() {
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "container mt-3"
-  }, /*#__PURE__*/React.createElement("h5", null, "Deposit"), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h5", null, "Deposit"), /*#__PURE__*/React.createElement("img", {
+    src: "deposit_withdraw.gif",
+    alt: "Image",
+    width: "20%"
+  }), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "userSelect"
-  }, "Select User"), /*#__PURE__*/React.createElement("select", {
+  }, "Select User.... Total Records: ", data.length), /*#__PURE__*/React.createElement("select", {
     className: "form-control",
     id: "userSelect",
     value: selectedUser,
@@ -108,7 +114,11 @@ function Deposit() {
     return /*#__PURE__*/React.createElement("option", {
       key: user.email,
       value: user.email
-    }, user.email, " - $", user.balance.toFixed(2));
+    }, user.email, " - $", user.balance.toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }));
   }))), /*#__PURE__*/React.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/React.createElement("label", {

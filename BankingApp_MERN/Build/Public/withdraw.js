@@ -79,7 +79,12 @@ function Withdraw() {
       }
     });
     user.balance = newBalance;
-    var withdrawAmt = "Successfully withdrawed $" + parseInt(withdrawAmount).toFixed(2) + " into " + selectedUser + "'s account";
+    var withdrawFormatted = withdrawAmount.toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    var withdrawAmt = "Successfully withdrawed $" + withdrawFormatted + " into " + selectedUser + "'s account";
     setStatus(withdrawAmt);
     setWithdrawAmount("");
     setTimeout(function () {
@@ -88,11 +93,15 @@ function Withdraw() {
   }
   return /*#__PURE__*/React.createElement("div", {
     className: "container mt-3"
-  }, /*#__PURE__*/React.createElement("h5", null, "Withdraw"), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h5", null, "Withdraw"), /*#__PURE__*/React.createElement("img", {
+    src: "deposit_withdraw.gif",
+    alt: "Image",
+    width: "20%"
+  }), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "userSelect"
-  }, "Select User"), /*#__PURE__*/React.createElement("select", {
+  }, "Select User.... Total Records: ", data.length), /*#__PURE__*/React.createElement("select", {
     className: "form-control",
     id: "userSelect",
     value: selectedUser,
@@ -105,7 +114,11 @@ function Withdraw() {
     return /*#__PURE__*/React.createElement("option", {
       key: user.email,
       value: user.email
-    }, user.email, " - $", user.balance.toFixed(2));
+    }, user.email, " - $", user.balance.toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }));
   }))), /*#__PURE__*/React.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/React.createElement("label", {
