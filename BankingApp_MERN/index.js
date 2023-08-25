@@ -97,15 +97,12 @@ app.get('/account/update/:email/:amount', function (req, res) {
 });
 
 // create transaction
-app.get('/account/transaction/:email/:amount', function (req, res) {
+app.get('/account/transaction/:email/:transaction/:amount', function (req, res) {
 
     var amount          = Number(req.params.amount);
-    var typeTransaction = "Deposit";
+    var typeTransaction = req.params.transaction;
     // check the transaction is a withdraw or deposit
-    if  (amount <0) {
-        typeTransaction = "Withdraw";
-    };
-
+    
     dal.transaction(req.params.email, typeTransaction, amount).
         then((response) => {
             console.log(response);
