@@ -16,8 +16,25 @@ function NavBar() {
     setTooltipText("");
   };
 
+  function createLogoutTransaction(){
+    // create transaction in DB
+    fetch(`/account/transaction/${user.UserEmail}/${'Logout'}/${0}`)
+    .then(response => response.text())
+    .then(text => {
+        try {
+            const data = JSON.parse(text);
+            console.log('JSON:', data);
+        } catch(err) {
+            //setStatus('Transaction failed')
+            console.log('err:', text);
+        }
+    });
+  }
+
   function handleLogout() {
     console.log('User: ' + user.UserEmail + ' is logged out' );
+    createLogoutTransaction();
+
     setUserEmail('');
     setIsLoggedIn(false);
 
@@ -111,7 +128,7 @@ function NavBar() {
                   <a className="nav-link" href="#/transactions/" data-tooltip="Transactions: Show all transactions stored from users">Transactions</a>
                 </li>
                 <li className="nav-item">
-                <a className="nav-link" href="#">Welcome: {user.UserEmail}</a>
+                <a className="nav-link" href="#/accesshistory/" data-tooltip="Show access history from user">Welcome: {user.UserEmail}</a>
                 </li>
                 <li className="nav-item">
                 <a className="nav-link" href="#" onClick={() => handleLogout()} data-tooltip="Logout current user">Logout</a>

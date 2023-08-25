@@ -48,7 +48,7 @@ function Deposit() {
     });
 
     // create transaction in DB
-    fetch(`/account/transaction/${user.email}/${depositAmount}`)
+    fetch(`/account/transaction/${user.email}/${'Deposit'}/${depositAmount}`)
     .then(response => response.text())
     .then(text => {
         try {

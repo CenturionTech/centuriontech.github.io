@@ -49,7 +49,7 @@ function Withdraw() {
     });
 
     // create transaction in DB
-    fetch(`/account/transaction/${user.email}/-${withdrawAmount}`)
+    fetch(`/account/transaction/${user.email}/${'Withdraw'}/-${withdrawAmount}`)
     .then(response => response.text())
     .then(text => {
         try {

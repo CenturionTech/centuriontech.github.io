@@ -28,6 +28,7 @@ function Spa() {
               <Route path="/balance/"       component={Balance} />
               <Route path="/alldata/"       component={AllData} />
               <Route path="/transactions/"  component={Transactions} />
+              <Route path="/accesshistory/" component={AccessHistory} />
             </div>
           </UserContext.Provider>
         </div>

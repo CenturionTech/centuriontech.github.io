@@ -27,8 +27,8 @@ function Transactions() {
   }, [selectedUser]);
 
   const filteredTransactions = selectedUser
-    ? transactionsdata.filter(transaction => transaction.email === selectedUser)
-    : transactionsdata;
+    ? transactionsdata.filter(transaction => (transaction.email === selectedUser && (transaction.typeTrans == 'Deposit' || transaction.typeTrans == 'Withdraw')))
+    : transactionsdata.filter(transaction => ((transaction.typeTrans == 'Deposit' || transaction.typeTrans == 'Withdraw')));
 
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;

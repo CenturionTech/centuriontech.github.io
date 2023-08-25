@@ -70,6 +70,21 @@ function LoginForm(props){
     return true;
   }
 
+  function createLoginTransaction(){
+    // create transaction in DB
+    fetch(`/account/transaction/${email}/${'Login'}/${0}`)
+    .then(response => response.text())
+    .then(text => {
+        try {
+            const data = JSON.parse(text);
+            console.log('JSON:', data);
+        } catch(err) {
+            setStatus('Transaction failed')
+            console.log('err:', text);
+        }
+    });
+  }
+
   function handle(){
     
 
@@ -93,6 +108,8 @@ function LoginForm(props){
             text = 'User: ' + email + ' is logged in';
             console.log(text);
             props.setStatus(text);
+            
+            createLoginTransaction();
                                   
             
         } catch(err) {
