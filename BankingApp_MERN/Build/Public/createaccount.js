@@ -63,6 +63,20 @@ function CreateAccount() {
     }
     return true;
   }
+  function createLoginTransaction() {
+    // create transaction in DB
+    fetch("/account/transaction/".concat(email, "/", 'Login', "/", 0)).then(function (response) {
+      return response.text();
+    }).then(function (text) {
+      try {
+        var data = JSON.parse(text);
+        console.log('JSON:', data);
+      } catch (err) {
+        setStatus('Transaction failed');
+        console.log('err:', text);
+      }
+    });
+  }
   function handleCreate() {
     console.log(name, email, password);
     if (!validate(name, 'name')) return;
@@ -95,6 +109,7 @@ function CreateAccount() {
                 IsloggedIn: true
               });
               console.log('User: ' + email + ' is logged in');
+              createLoginTransaction();
               setShow(false);
             }
           case 8:

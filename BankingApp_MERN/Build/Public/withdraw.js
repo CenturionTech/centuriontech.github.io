@@ -67,7 +67,7 @@ function Withdraw() {
     });
 
     // create transaction in DB
-    fetch("/account/transaction/".concat(user.email, "/-").concat(withdrawAmount)).then(function (response) {
+    fetch("/account/transaction/".concat(user.email, "/", 'Withdraw', "/-").concat(withdrawAmount)).then(function (response) {
       return response.text();
     }).then(function (text) {
       try {

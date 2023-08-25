@@ -67,6 +67,9 @@ function Spa() {
   }), /*#__PURE__*/React.createElement(Route, {
     path: "/transactions/",
     component: Transactions
+  }), /*#__PURE__*/React.createElement(Route, {
+    path: "/accesshistory/",
+    component: AccessHistory
   })))));
 }
 ReactDOM.render( /*#__PURE__*/React.createElement(Spa, null), document.getElementById('root'));

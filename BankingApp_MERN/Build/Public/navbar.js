@@ -31,8 +31,23 @@ function NavBar() {
   var handleMouseLeave = function handleMouseLeave() {
     setTooltipText("");
   };
+  function createLogoutTransaction() {
+    // create transaction in DB
+    fetch("/account/transaction/".concat(user.UserEmail, "/", 'Logout', "/", 0)).then(function (response) {
+      return response.text();
+    }).then(function (text) {
+      try {
+        var data = JSON.parse(text);
+        console.log('JSON:', data);
+      } catch (err) {
+        //setStatus('Transaction failed')
+        console.log('err:', text);
+      }
+    });
+  }
   function handleLogout() {
     console.log('User: ' + user.UserEmail + ' is logged out');
+    createLogoutTransaction();
     setUserEmail('');
     setIsLoggedIn(false);
     updateUserContext({
@@ -156,7 +171,8 @@ function NavBar() {
     className: "nav-item"
   }, /*#__PURE__*/React.createElement("a", {
     className: "nav-link",
-    href: "#"
+    href: "#/accesshistory/",
+    "data-tooltip": "Show access history from user"
   }, "Welcome: ", user.UserEmail)), /*#__PURE__*/React.createElement("li", {
     className: "nav-item"
   }, /*#__PURE__*/React.createElement("a", {

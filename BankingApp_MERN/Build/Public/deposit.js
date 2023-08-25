@@ -67,7 +67,7 @@ function Deposit() {
     });
 
     // create transaction in DB
-    fetch("/account/transaction/".concat(user.email, "/").concat(depositAmount)).then(function (response) {
+    fetch("/account/transaction/".concat(user.email, "/", 'Deposit', "/").concat(depositAmount)).then(function (response) {
       return response.text();
     }).then(function (text) {
       try {

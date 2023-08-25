@@ -95,6 +95,20 @@ function LoginForm(props) {
     }
     return true;
   }
+  function createLoginTransaction() {
+    // create transaction in DB
+    fetch("/account/transaction/".concat(email, "/", 'Login', "/", 0)).then(function (response) {
+      return response.text();
+    }).then(function (text) {
+      try {
+        var data = JSON.parse(text);
+        console.log('JSON:', data);
+      } catch (err) {
+        setStatus('Transaction failed');
+        console.log('err:', text);
+      }
+    });
+  }
   function handle() {
     console.log(email, password);
     if (!validate(email, 'email', props.setStatus)) return;
@@ -117,6 +131,7 @@ function LoginForm(props) {
         text = 'User: ' + email + ' is logged in';
         console.log(text);
         props.setStatus(text);
+        createLoginTransaction();
       } catch (err) {
         props.setStatus(text);
         console.log('err:' + err, text);
