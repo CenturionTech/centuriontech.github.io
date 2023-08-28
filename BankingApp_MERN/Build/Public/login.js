@@ -122,7 +122,6 @@ function LoginForm(props) {
         props.setShow(false);
 
         // Update the userEmail and isLoggedIn states through the context
-
         updateUserContext({
           UserEmail: email,
           IsloggedIn: true
@@ -131,7 +130,7 @@ function LoginForm(props) {
         text = 'User: ' + email + ' is logged in';
         console.log(text);
         props.setStatus(text);
-        createLoginTransaction();
+        createLoginTransaction(); // record the login of current user
       } catch (err) {
         props.setStatus(text);
         console.log('err:' + err, text);

@@ -52,6 +52,15 @@ function Transactions() {
   var totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
   var startIndex = (currentPage - 1) * itemsPerPage;
   var endIndex = startIndex + itemsPerPage;
+  var totalDeposit = 0;
+  var totalWithdraw = 0;
+  filteredTransactions.forEach(function (element) {
+    if (element.typeTrans === "Deposit") {
+      totalDeposit += element.amount;
+    } else if (element.typeTrans === "Withdraw") {
+      totalWithdraw += element.amount;
+    }
+  });
   var displayedTransactions = filteredTransactions.slice(startIndex, endIndex);
   function handleNextPage() {
     setCurrentPage(function (prevPage) {
@@ -122,5 +131,17 @@ function Transactions() {
     disabled: currentPage === totalPages
   }, "Next Page"), /*#__PURE__*/React.createElement("span", {
     className: "mx-3"
-  }, "Total Transactions: ", filteredTransactions.length)));
+  }, "Total Transactions: ", filteredTransactions.length), /*#__PURE__*/React.createElement("span", {
+    className: "mx-3"
+  }, "Deposits: $", totalDeposit.toLocaleString('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })), /*#__PURE__*/React.createElement("span", {
+    className: "mx-3"
+  }, "Withdrawals: $", totalWithdraw.toLocaleString('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }))));
 }
