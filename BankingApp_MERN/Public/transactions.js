@@ -33,6 +33,18 @@ function Transactions() {
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+  let totalDeposit   = 0;
+  let totalWithdraw  = 0;
+
+  filteredTransactions.forEach(element => {
+    if (element.typeTrans === "Deposit") {
+      totalDeposit += element.amount;
+    }
+    else 
+    if (element.typeTrans === "Withdraw") {
+      totalWithdraw += element.amount;
+    }
+  });
 
   const displayedTransactions = filteredTransactions.slice(startIndex, endIndex);
 
@@ -98,6 +110,15 @@ function Transactions() {
         <span className="mx-3">Page {currentPage} of {totalPages}</span>
         <button className="btn btn-light" onClick={handleNextPage} disabled={currentPage === totalPages}>Next Page</button>
         <span className="mx-3">Total Transactions: {filteredTransactions.length}</span>
+        <span className="mx-3">Deposits: ${totalDeposit.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2})}</span>
+        <span className="mx-3">Withdrawals: ${totalWithdraw.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2})}</span>
+        
       </div>
     </div>
   );

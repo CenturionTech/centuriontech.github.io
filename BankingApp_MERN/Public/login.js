@@ -86,8 +86,6 @@ function LoginForm(props){
   }
 
   function handle(){
-    
-
     console.log(email,password);
     if (!validate(email,    'email', props.setStatus))    return;
     if (!validate(password, 'password', props.setStatus)) return;
@@ -101,7 +99,6 @@ function LoginForm(props){
             props.setShow(false);
 
             // Update the userEmail and isLoggedIn states through the context
-           
             updateUserContext({ UserEmail: email, IsloggedIn: true });
                         
             console.log('JSON:', data);
@@ -109,8 +106,7 @@ function LoginForm(props){
             console.log(text);
             props.setStatus(text);
             
-            createLoginTransaction();
-                                  
+            createLoginTransaction(); // record the login of current user
             
         } catch(err) {
             props.setStatus(text)

@@ -21,7 +21,8 @@ function AccessHistory() {
       setCurrentPage(1);
     }, [selectedUser]);
   
-    const filteredTransactions = transactionsdata.filter(transaction => (transaction.email === user.UserEmail && (transaction.typeTrans == 'Login' || transaction.typeTrans == 'Logout')));
+    const filteredTransactions = transactionsdata.filter(transaction => 
+                (transaction.email === user.UserEmail && (transaction.typeTrans == 'Login' || transaction.typeTrans == 'Logout')));
       
     const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
