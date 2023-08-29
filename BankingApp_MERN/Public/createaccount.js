@@ -1,12 +1,13 @@
 // createaccount.js
 
 function CreateAccount(){
-  const [show, setShow]         = React.useState(true);
-  const [status, setStatus]     = React.useState('');
-  const [name, setName]         = React.useState('');
-  const [email, setEmail]       = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const { user, updateUserContext }   = useContext(UserContext);
+  const [show, setShow]                 = React.useState(true);
+  const [showPassword, setShowPassword] = React.useState(false); 
+  const [status, setStatus]             = React.useState('');
+  const [name, setName]                 = React.useState('');
+  const [email, setEmail]               = React.useState('');
+  const [password, setPassword]         = React.useState('');
+  const { user, updateUserContext }     = useContext(UserContext);
   
 
   function validate(field, label) {
@@ -101,7 +102,22 @@ function CreateAccount(){
               Email address:<br />
               <input type="input" className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.currentTarget.value)} /><br />
               Password:<br />
-              <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.currentTarget.value)} /><br />
+              <input
+                  type={showPassword ? 'text' : 'password'} // Toggle password visibility
+                  className="form-control"
+                  id="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.currentTarget.value)}
+                />
+              <input
+                  type="checkbox"
+                  id="showPassword"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                />
+                <label htmlFor="showPassword">Show Password</label>
+              <br />
               <button type="submit" className="btn btn-light" onClick={handleCreate}>Create Account</button>
             </>
           ) : (
