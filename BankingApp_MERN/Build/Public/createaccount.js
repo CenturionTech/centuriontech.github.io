@@ -17,22 +17,26 @@ function CreateAccount() {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     show = _React$useState2[0],
     setShow = _React$useState2[1];
-  var _React$useState3 = React.useState(''),
+  var _React$useState3 = React.useState(false),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
-    status = _React$useState4[0],
-    setStatus = _React$useState4[1];
+    showPassword = _React$useState4[0],
+    setShowPassword = _React$useState4[1];
   var _React$useState5 = React.useState(''),
     _React$useState6 = _slicedToArray(_React$useState5, 2),
-    name = _React$useState6[0],
-    setName = _React$useState6[1];
+    status = _React$useState6[0],
+    setStatus = _React$useState6[1];
   var _React$useState7 = React.useState(''),
     _React$useState8 = _slicedToArray(_React$useState7, 2),
-    email = _React$useState8[0],
-    setEmail = _React$useState8[1];
+    name = _React$useState8[0],
+    setName = _React$useState8[1];
   var _React$useState9 = React.useState(''),
     _React$useState10 = _slicedToArray(_React$useState9, 2),
-    password = _React$useState10[0],
-    setPassword = _React$useState10[1];
+    email = _React$useState10[0],
+    setEmail = _React$useState10[1];
+  var _React$useState11 = React.useState(''),
+    _React$useState12 = _slicedToArray(_React$useState11, 2),
+    password = _React$useState12[0],
+    setPassword = _React$useState12[1];
   var _useContext = useContext(UserContext),
     user = _useContext.user,
     updateUserContext = _useContext.updateUserContext;
@@ -157,7 +161,8 @@ function CreateAccount() {
         return setEmail(e.currentTarget.value);
       }
     }), /*#__PURE__*/React.createElement("br", null), "Password:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
-      type: "password",
+      type: showPassword ? 'text' : 'password' // Toggle password visibility
+      ,
       className: "form-control",
       id: "password",
       placeholder: "Enter password",
@@ -165,7 +170,16 @@ function CreateAccount() {
       onChange: function onChange(e) {
         return setPassword(e.currentTarget.value);
       }
-    }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("button", {
+    }), /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      id: "showPassword",
+      checked: showPassword,
+      onChange: function onChange() {
+        return setShowPassword(!showPassword);
+      } // Toggle showPassword state
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "showPassword"
+    }, "Show Password"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("button", {
       type: "submit",
       className: "btn btn-light",
       onClick: handleCreate

@@ -20,7 +20,7 @@ function Card(props) {
   return /*#__PURE__*/React.createElement("div", {
     className: classes(),
     style: {
-      maxWidth: "18rem"
+      maxWidth: "24rem"
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "card-header"
