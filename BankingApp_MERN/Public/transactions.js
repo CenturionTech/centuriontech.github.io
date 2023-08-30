@@ -110,14 +110,14 @@ function Transactions() {
         <span className="mx-3">Page {currentPage} of {totalPages}</span>
         <button className="btn btn-light" onClick={handleNextPage} disabled={currentPage === totalPages}>Next Page</button>
         <span className="mx-3">Total Transactions: {filteredTransactions.length}</span>
-        <span className="mx-3">Deposits: ${totalDeposit.toLocaleString('en-US', {
+        <span className="mx-3"><strong>Deposits: ${totalDeposit.toLocaleString('en-US', {
                     style: 'decimal',
                     minimumFractionDigits: 2,
-                    maximumFractionDigits: 2})}</span>
-        <span className="mx-3">Withdrawals: ${totalWithdraw.toLocaleString('en-US', {
+                    maximumFractionDigits: 2})}</strong></span>
+        <span className="mx-3"><strong>Withdrawals: ${totalWithdraw.toLocaleString('en-US', {
                     style: 'decimal',
                     minimumFractionDigits: 2,
-                    maximumFractionDigits: 2})}</span>
+                    maximumFractionDigits: 2})}</strong></span>
         
       </div>
     </div>

@@ -163,7 +163,7 @@ function Home() {
 
     return currenciesToShow.map(currency => (
       <tr key={currency}>
-        <td>{currency}</td>
+        <td><strong>{currency}</strong></td>
         <td>{currencyNames[currency]}</td>
         <td>{exchangeRates[currency]}</td>
       </tr>
