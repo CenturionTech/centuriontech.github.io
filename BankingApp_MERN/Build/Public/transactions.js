@@ -133,15 +133,15 @@ function Transactions() {
     className: "mx-3"
   }, "Total Transactions: ", filteredTransactions.length), /*#__PURE__*/React.createElement("span", {
     className: "mx-3"
-  }, "Deposits: $", totalDeposit.toLocaleString('en-US', {
+  }, /*#__PURE__*/React.createElement("strong", null, "Deposits: $", totalDeposit.toLocaleString('en-US', {
     style: 'decimal',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  })), /*#__PURE__*/React.createElement("span", {
+  }))), /*#__PURE__*/React.createElement("span", {
     className: "mx-3"
-  }, "Withdrawals: $", totalWithdraw.toLocaleString('en-US', {
+  }, /*#__PURE__*/React.createElement("strong", null, "Withdrawals: $", totalWithdraw.toLocaleString('en-US', {
     style: 'decimal',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  }))));
+  })))));
 }

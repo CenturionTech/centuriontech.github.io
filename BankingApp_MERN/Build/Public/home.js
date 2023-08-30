@@ -223,7 +223,7 @@ function Home() {
     return currenciesToShow.map(function (currency) {
       return /*#__PURE__*/React.createElement("tr", {
         key: currency
-      }, /*#__PURE__*/React.createElement("td", null, currency), /*#__PURE__*/React.createElement("td", null, currencyNames[currency]), /*#__PURE__*/React.createElement("td", null, exchangeRates[currency]));
+      }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, currency)), /*#__PURE__*/React.createElement("td", null, currencyNames[currency]), /*#__PURE__*/React.createElement("td", null, exchangeRates[currency]));
     });
   };
   return /*#__PURE__*/React.createElement("div", {
