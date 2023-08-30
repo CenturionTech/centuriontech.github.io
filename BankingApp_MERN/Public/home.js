@@ -1,6 +1,7 @@
 // home.js
 
 const { useState , useEffect} = React;
+
 const currencyNames = {
   AUD:"Australian Dollar",
   BGN:"Bulgarian Lev",
@@ -35,16 +36,67 @@ const currencyNames = {
   ZAR:"South African Rand"
 };
 
-
+const stockSymbols = {
+  AAPL:"Apple Inc",
+  MSFT:"Microsoft",
+  GOOGL:"Alphabet Class A",
+  AMZN: "Amazon",
+  TSLA:"Tesla",
+  NVDA:"Nvidia",
+  META:"Meta Platforms",
+  BABA:"Alibaba",
+  AMD:"Advanced Micro Devices",
+  DIS:"Walt Disney",
+  T:"AT&T",
+  PYPL:"Paypal Holdings",
+  PLTR:"Palantir Technologies",
+  VISA:"Visa",
+  JNJ:"Johnson & Johnson",
+  BAC:"Bank of America",
+  CRM:"Salesforce",
+  PFE:"Pfizer",
+  NFLX:"Netflix",
+  INTC:"Intel",
+  BA:"Boeing",
+  GE:"General Electric",
+  F:"Ford Motor",
+  XOM:"Exxon Mobil",
+  JPM:"JPMorgan Chase & Co.",
+  WMT:"Walmart",
+  KO:"Coca-Cola",
+  CSCO:"Cisco Systems",
+  GM:"General Motors",
+  MA:"Mastercard",
+  HD:"Home Depot",
+  CVX:"Chevron",
+  SBUX:"Starbucks",
+  NKE:"Nike",
+  C:"Citigroup",
+  DAL:"Delta Air Lines",
+  ZM:"Zoom Video Communications",
+  IBM:"International Business Machines",
+  AAL:"American Airlines",
+  SPCE:"Virgin Galactic Holdings",
+  PG:"Procter & Gamble",
+  MCD:"McDonald's",
+  MMM:"3M",
+  FDX:"FedEx",
+  ORCL:"Oracle",
+  BP:"BP",
+  MLB1:"Mercado Libre",
+  AXP:"American Express",
+};
 
 function Home() {
  
   const [exchangeRates, setExchangeRates] = useState({});
+  const [financeData, setFinanceData] = useState({});
+  const [selectedStockSymbol, setSelectedStockSymbol] = useState('AAPL'); // Default symbol
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const [ratesDate, setRatesDate] = useState('');
   
-  
+  // get the current exchange rates from frankfurter API
   useEffect(() => {
     const fetchExchangeRates = async () => {
       try {
@@ -67,6 +119,34 @@ function Home() {
 
     return () => clearInterval(interval);
   }, []);
+
+  
+  // get stock market data from Yahoo API
+  const url = 'https://yfinance-stock-market-data.p.rapidapi.com/stock-info';
+  const handleSymbolChange = event => {
+    setSelectedStockSymbol(event.target.value);
+  };
+
+  const handleFetchStockData = async () => {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-RapidAPI-Key': 'af73607823msh25085cda054075ap1a7c79jsn6f7c0cb329b8',
+          'X-RapidAPI-Host': 'yfinance-stock-market-data.p.rapidapi.com'
+        },
+        body: new URLSearchParams({ symbol: selectedStockSymbol }).toString()
+      });
+      const finance = await response.json();
+      console.log('Yahoo Stock Market');
+      console.log(finance);
+      setFinanceData(finance.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
 
   const totalPages = Math.ceil(Object.keys(exchangeRates).length / itemsPerPage);
 
@@ -137,6 +217,46 @@ function Home() {
           </div>
         </div>
       </div>
+      <div className="col-md-6 mt-4">
+        <div>
+          <h5>Stock Symbol Selector</h5>
+          <select
+            value={selectedStockSymbol}
+            onChange={handleSymbolChange}
+          >
+            {Object.entries(stockSymbols).map(([symbol, name]) => (
+              <option key={symbol} value={symbol}>
+                {symbol} - {name}
+              </option>
+            ))}
+          </select>
+          <button onClick={handleFetchStockData}>Fetch Stock Data</button>
+             
+        </div>
+        <div>
+            <h5>Market Data for {stockSymbols[selectedStockSymbol]}</h5>
+            {console.log(financeData)} {/* Debugging */}
+            {financeData !== null ? (
+              <div style={{ maxHeight: "300px", overflow: "auto", border: "1px solid #ccc", padding: "10px" }}>
+                {Object.entries(financeData).map(([key, value]) => {
+                  // Skip rendering the "companyOfficers" field
+                  if (key === "companyOfficers") {
+                    return null; // Skip rendering this field
+                  }
+
+                  return (
+                    <p key={key}>
+                      <strong>{key}:</strong> {value}
+                    </p>
+                  );
+                })}
+              </div>
+            ) : (
+              <p>No market data available.</p>
+            )}
+        </div>
+      </div>
+
     </div>
   );
 }
