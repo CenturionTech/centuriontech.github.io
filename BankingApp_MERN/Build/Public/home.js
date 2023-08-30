@@ -48,20 +48,80 @@ var currencyNames = {
   USD: "United States Dollar",
   ZAR: "South African Rand"
 };
+var stockSymbols = {
+  AAPL: "Apple Inc",
+  MSFT: "Microsoft",
+  GOOGL: "Alphabet Class A",
+  AMZN: "Amazon",
+  TSLA: "Tesla",
+  NVDA: "Nvidia",
+  META: "Meta Platforms",
+  BABA: "Alibaba",
+  AMD: "Advanced Micro Devices",
+  DIS: "Walt Disney",
+  T: "AT&T",
+  PYPL: "Paypal Holdings",
+  PLTR: "Palantir Technologies",
+  VISA: "Visa",
+  JNJ: "Johnson & Johnson",
+  BAC: "Bank of America",
+  CRM: "Salesforce",
+  PFE: "Pfizer",
+  NFLX: "Netflix",
+  INTC: "Intel",
+  BA: "Boeing",
+  GE: "General Electric",
+  F: "Ford Motor",
+  XOM: "Exxon Mobil",
+  JPM: "JPMorgan Chase & Co.",
+  WMT: "Walmart",
+  KO: "Coca-Cola",
+  CSCO: "Cisco Systems",
+  GM: "General Motors",
+  MA: "Mastercard",
+  HD: "Home Depot",
+  CVX: "Chevron",
+  SBUX: "Starbucks",
+  NKE: "Nike",
+  C: "Citigroup",
+  DAL: "Delta Air Lines",
+  ZM: "Zoom Video Communications",
+  IBM: "International Business Machines",
+  AAL: "American Airlines",
+  SPCE: "Virgin Galactic Holdings",
+  PG: "Procter & Gamble",
+  MCD: "McDonald's",
+  MMM: "3M",
+  FDX: "FedEx",
+  ORCL: "Oracle",
+  BP: "BP",
+  MLB1: "Mercado Libre",
+  AXP: "American Express"
+};
 function Home() {
   var _useState = useState({}),
     _useState2 = _slicedToArray(_useState, 2),
     exchangeRates = _useState2[0],
     setExchangeRates = _useState2[1];
-  var _useState3 = useState(1),
+  var _useState3 = useState({}),
     _useState4 = _slicedToArray(_useState3, 2),
-    currentPage = _useState4[0],
-    setCurrentPage = _useState4[1];
-  var itemsPerPage = 5;
-  var _useState5 = useState(''),
+    financeData = _useState4[0],
+    setFinanceData = _useState4[1];
+  var _useState5 = useState('AAPL'),
     _useState6 = _slicedToArray(_useState5, 2),
-    ratesDate = _useState6[0],
-    setRatesDate = _useState6[1];
+    selectedStockSymbol = _useState6[0],
+    setSelectedStockSymbol = _useState6[1]; // Default symbol
+  var _useState7 = useState(1),
+    _useState8 = _slicedToArray(_useState7, 2),
+    currentPage = _useState8[0],
+    setCurrentPage = _useState8[1];
+  var itemsPerPage = 5;
+  var _useState9 = useState(''),
+    _useState10 = _slicedToArray(_useState9, 2),
+    ratesDate = _useState10[0],
+    setRatesDate = _useState10[1];
+
+  // get the current exchange rates from frankfurter API
   useEffect(function () {
     var fetchExchangeRates = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -103,6 +163,56 @@ function Home() {
       return clearInterval(interval);
     };
   }, []);
+
+  // get stock market data from Yahoo API
+  var url = 'https://yfinance-stock-market-data.p.rapidapi.com/stock-info';
+  var handleSymbolChange = function handleSymbolChange(event) {
+    setSelectedStockSymbol(event.target.value);
+  };
+  var handleFetchStockData = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var response, finance;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-RapidAPI-Key': 'af73607823msh25085cda054075ap1a7c79jsn6f7c0cb329b8',
+                'X-RapidAPI-Host': 'yfinance-stock-market-data.p.rapidapi.com'
+              },
+              body: new URLSearchParams({
+                symbol: selectedStockSymbol
+              }).toString()
+            });
+          case 3:
+            response = _context2.sent;
+            _context2.next = 6;
+            return response.json();
+          case 6:
+            finance = _context2.sent;
+            console.log('Yahoo Stock Market');
+            console.log(finance);
+            setFinanceData(finance.data);
+            _context2.next = 15;
+            break;
+          case 12:
+            _context2.prev = 12;
+            _context2.t0 = _context2["catch"](0);
+            console.error(_context2.t0);
+          case 15:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[0, 12]]);
+    }));
+    return function handleFetchStockData() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
   var totalPages = Math.ceil(Object.keys(exchangeRates).length / itemsPerPage);
   var handlePageChange = function handlePageChange(newPage) {
     setCurrentPage(newPage);
@@ -162,5 +272,39 @@ function Home() {
       return handlePageChange(currentPage + 1);
     },
     disabled: currentPage === totalPages
-  }, "Next")))));
+  }, "Next")))), /*#__PURE__*/React.createElement("div", {
+    className: "col-md-6 mt-4"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", null, "Stock Symbol Selector"), /*#__PURE__*/React.createElement("select", {
+    value: selectedStockSymbol,
+    onChange: handleSymbolChange
+  }, Object.entries(stockSymbols).map(function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+      symbol = _ref4[0],
+      name = _ref4[1];
+    return /*#__PURE__*/React.createElement("option", {
+      key: symbol,
+      value: symbol
+    }, symbol, " - ", name);
+  })), /*#__PURE__*/React.createElement("button", {
+    onClick: handleFetchStockData
+  }, "Fetch Stock Data")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", null, "Market Data for ", stockSymbols[selectedStockSymbol]), console.log(financeData), " ", financeData !== null ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxHeight: "300px",
+      overflow: "auto",
+      border: "1px solid #ccc",
+      padding: "10px"
+    }
+  }, Object.entries(financeData).map(function (_ref5) {
+    var _ref6 = _slicedToArray(_ref5, 2),
+      key = _ref6[0],
+      value = _ref6[1];
+    // Skip rendering the "companyOfficers" field
+    if (key === "companyOfficers") {
+      return null; // Skip rendering this field
+    }
+
+    return /*#__PURE__*/React.createElement("p", {
+      key: key
+    }, /*#__PURE__*/React.createElement("strong", null, key, ":"), " ", value);
+  })) : /*#__PURE__*/React.createElement("p", null, "No market data available."))));
 }
