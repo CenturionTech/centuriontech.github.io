@@ -107,19 +107,23 @@ function Home() {
     _useState4 = _slicedToArray(_useState3, 2),
     financeData = _useState4[0],
     setFinanceData = _useState4[1];
-  var _useState5 = useState('AAPL'),
+  var _useState5 = useState(''),
     _useState6 = _slicedToArray(_useState5, 2),
-    selectedStockSymbol = _useState6[0],
-    setSelectedStockSymbol = _useState6[1]; // Default symbol
-  var _useState7 = useState(1),
+    ceo = _useState6[0],
+    setCeo = _useState6[1];
+  var _useState7 = useState('AAPL'),
     _useState8 = _slicedToArray(_useState7, 2),
-    currentPage = _useState8[0],
-    setCurrentPage = _useState8[1];
-  var itemsPerPage = 5;
-  var _useState9 = useState(''),
+    selectedStockSymbol = _useState8[0],
+    setSelectedStockSymbol = _useState8[1]; // Default symbol
+  var _useState9 = useState(1),
     _useState10 = _slicedToArray(_useState9, 2),
-    ratesDate = _useState10[0],
-    setRatesDate = _useState10[1];
+    currentPage = _useState10[0],
+    setCurrentPage = _useState10[1];
+  var itemsPerPage = 6;
+  var _useState11 = useState(''),
+    _useState12 = _slicedToArray(_useState11, 2),
+    ratesDate = _useState12[0],
+    setRatesDate = _useState12[1];
 
   // get the current exchange rates from frankfurter API
   useEffect(function () {
@@ -167,6 +171,8 @@ function Home() {
   // get stock market data from Yahoo API
   var url = 'https://yfinance-stock-market-data.p.rapidapi.com/stock-info';
   var handleSymbolChange = function handleSymbolChange(event) {
+    setCeo('');
+    setFinanceData({});
     setSelectedStockSymbol(event.target.value);
   };
   var handleFetchStockData = /*#__PURE__*/function () {
@@ -197,17 +203,23 @@ function Home() {
             console.log('Yahoo Stock Market');
             console.log(finance);
             setFinanceData(finance.data);
-            _context2.next = 15;
+            if (finance.data != null) {
+              setCeo(finance.data['companyOfficers'][0]['title'] + " : " + finance.data['companyOfficers'][0]['name']);
+            } else {
+              setCeo("No CEO found");
+            }
+            ;
+            _context2.next = 17;
             break;
-          case 12:
-            _context2.prev = 12;
+          case 14:
+            _context2.prev = 14;
             _context2.t0 = _context2["catch"](0);
             console.error(_context2.t0);
-          case 15:
+          case 17:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[0, 12]]);
+      }, _callee2, null, [[0, 14]]);
     }));
     return function handleFetchStockData() {
       return _ref2.apply(this, arguments);
@@ -287,9 +299,14 @@ function Home() {
     }, symbol, " - ", name);
   })), /*#__PURE__*/React.createElement("button", {
     onClick: handleFetchStockData
-  }, "Fetch Stock Data")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", null, "Market Data for ", stockSymbols[selectedStockSymbol]), console.log(financeData), " ", financeData !== null ? /*#__PURE__*/React.createElement("div", {
+  }, "Fetch Stock Data")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", null, "Market Data for ", stockSymbols[selectedStockSymbol]), console.log(financeData), " ", financeData !== null ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
     style: {
-      maxHeight: "300px",
+      color: "blue",
+      fontSize: "18px"
+    }
+  }, ceo), /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxHeight: "280px",
       overflow: "auto",
       border: "1px solid #ccc",
       padding: "10px"
@@ -306,5 +323,5 @@ function Home() {
     return /*#__PURE__*/React.createElement("p", {
       key: key
     }, /*#__PURE__*/React.createElement("strong", null, key, ":"), " ", value);
-  })) : /*#__PURE__*/React.createElement("p", null, "No market data available."))));
+  }))) : /*#__PURE__*/React.createElement("p", null, "No market data available."))));
 }
