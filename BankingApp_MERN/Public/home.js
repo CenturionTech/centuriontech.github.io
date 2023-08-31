@@ -91,9 +91,10 @@ function Home() {
  
   const [exchangeRates, setExchangeRates] = useState({});
   const [financeData, setFinanceData] = useState({});
+  const [ceo, setCeo] = useState('');
   const [selectedStockSymbol, setSelectedStockSymbol] = useState('AAPL'); // Default symbol
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 6;
   const [ratesDate, setRatesDate] = useState('');
   
   // get the current exchange rates from frankfurter API
@@ -124,6 +125,8 @@ function Home() {
   // get stock market data from Yahoo API
   const url = 'https://yfinance-stock-market-data.p.rapidapi.com/stock-info';
   const handleSymbolChange = event => {
+    setCeo('');
+    setFinanceData({});
     setSelectedStockSymbol(event.target.value);
   };
 
@@ -142,6 +145,11 @@ function Home() {
       console.log('Yahoo Stock Market');
       console.log(finance);
       setFinanceData(finance.data);
+
+      if (finance.data != null) {
+        setCeo(finance.data['companyOfficers'][0]['title'] + " : "+ finance.data['companyOfficers'][0]['name']);
+      } else{setCeo("No CEO found")};
+
     } catch (error) {
       console.error(error);
     }
@@ -237,7 +245,9 @@ function Home() {
             <h5>Market Data for {stockSymbols[selectedStockSymbol]}</h5>
             {console.log(financeData)} {/* Debugging */}
             {financeData !== null ? (
-              <div style={{ maxHeight: "300px", overflow: "auto", border: "1px solid #ccc", padding: "10px" }}>
+              <div>
+              <p style={{ color: "blue", fontSize: "18px" }}>{ceo}</p>
+               <div style={{ maxHeight: "280px", overflow: "auto", border: "1px solid #ccc", padding: "10px" }}>
                 {Object.entries(financeData).map(([key, value]) => {
                   // Skip rendering the "companyOfficers" field
                   if (key === "companyOfficers") {
@@ -250,7 +260,8 @@ function Home() {
                     </p>
                   );
                 })}
-              </div>
+                </div>
+               </div>
             ) : (
               <p>No market data available.</p>
             )}
