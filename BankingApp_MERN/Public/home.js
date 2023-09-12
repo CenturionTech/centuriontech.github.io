@@ -1,5 +1,4 @@
 // home.js
-
 const { useState , useEffect} = React;
 
 const currencyNames = {
@@ -96,7 +95,10 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const [ratesDate, setRatesDate] = useState('');
-  
+  const [showChart, setShowChart] = useState(false);
+  const [ApiError, setAPIerror] = useState(false);
+  const stockLabels = "Oper. Date--Open--High--Low--Close";
+    
   // get the current exchange rates from frankfurter API
   useEffect(() => {
     const fetchExchangeRates = async () => {
@@ -122,12 +124,96 @@ function Home() {
   }, []);
 
   
+  //get finance data for selected stock symbol
+  // show stock chart from API alphavantage
+  const RechartsStockChart = () => {
+    const [stockData, setStockData] = useState([]);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const apiKey = 'PGVCFEMTK2SS8KK8';
+          console.log(selectedStockSymbol, apiKey);
+          const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${selectedStockSymbol}&apikey=${apiKey}`;
+          console.log(url);
+  
+          if (!url || !apiKey) {
+            throw new Error("Invalid URL or API Key");
+          }
+  
+          const response = await fetch(url);
+          const data = await response.json(); // Correctly parse JSON response
+  
+          if (data && data['Time Series (Daily)']) {
+            const dailyData = data['Time Series (Daily)'];
+            const chartData = Object.keys(dailyData).map((date) => ({
+              date,
+              priceOpen:  parseFloat(dailyData[date]['1. open']).toFixed(2),
+              priceHigh:  parseFloat(dailyData[date]['2. high']).toFixed(2),
+              priceLow:   parseFloat(dailyData[date]['3. low']).toFixed(2),
+              priceClose: parseFloat(dailyData[date]['4. close']).toFixed(2),
+            }));
+  
+            setStockData(chartData.reverse());
+            setLoading(false);
+            console.log({ chartData });
+          } else {
+            console.error('Invalid or empty data received from the API.');
+            setLoading(false);
+          }
+        } catch (error) {
+          console.error('Error fetching stock data:', error);
+          setLoading(false);
+        }
+      };
+  
+      fetchData();
+    }, [selectedStockSymbol]); // Add selectedStockSymbol as a dependency to fetch data when it changes
+  
+    return (
+      <div>
+        {stockData.length > 0 && (
+          <div>
+            <h5>Stock Price from: {stockData[0].date} to {stockData[stockData.length - 1].date}</h5>
+            <p style={{ color: "blue", fontSize: "18px" }}><strong>{stockLabels}</strong></p>
+            
+          </div>
+        )}
+        {loading ? (
+          'Loading...'
+        ) : (
+          stockData.length > 0 ? (
+            <div style={{ maxHeight: "280px", overflow: "auto", border: "1px solid #ccc", padding: "10px" }}>
+              {stockData.reverse().map((dataPoint, index) => (
+                <div key={index}>
+                  <p>{dataPoint.date}&nbsp;&nbsp;  
+                     {dataPoint.priceOpen}&nbsp;&nbsp; 
+                     {dataPoint.priceHigh}&nbsp;&nbsp; 
+                     {dataPoint.priceLow}&nbsp;&nbsp; 
+                     {dataPoint.priceClose} 
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            'No stock data available.'
+          )
+        )}
+      </div>
+    );
+  };
+  
+  
+
+  
   // get stock market data from Yahoo API
   const url = 'https://yfinance-stock-market-data.p.rapidapi.com/stock-info';
   const handleSymbolChange = event => {
     setCeo('');
     setFinanceData({});
     setSelectedStockSymbol(event.target.value);
+    setShowChart(false);
   };
 
   const handleFetchStockData = async () => {
@@ -144,14 +230,28 @@ function Home() {
       const finance = await response.json();
       console.log('Yahoo Stock Market');
       console.log(finance);
-      setFinanceData(finance.data);
+      if (finance.message && finance.message.includes('You have exceeded the DAILY quota for Requests on'))
+      { 
+        setCeo('You have exceeded the DAILY quota for Requests on …pi.com/asepscareer/api/yfinance-stock-market-data');
+        setShowChart(false); 
+        setAPIerror(true);
+        
+      }
+      
+      if (!ApiError) {
+       setFinanceData(finance.data);
 
-      if (finance.data != null) {
+       if (finance.data != null) {
         setCeo(finance.data['companyOfficers'][0]['title'] + " : "+ finance.data['companyOfficers'][0]['name']);
-      } else{setCeo("No CEO found")};
+        setShowChart(true); // Set showChart to true when data is fetched
+       } else{setCeo("No CEO found")};
+      }
+      else setFinanceData({});
 
     } catch (error) {
       console.error(error);
+      setAPIerror(true);
+      setShowChart(false); 
     }
   };
   
@@ -244,9 +344,10 @@ function Home() {
         <div>
             <h5>Market Data for {stockSymbols[selectedStockSymbol]}</h5>
             {console.log(financeData)} {/* Debugging */}
-            {financeData !== null ? (
+            
+            {(!ApiError && financeData !== null) ? (
               <div>
-              <p style={{ color: "blue", fontSize: "18px" }}>{ceo}</p>
+               <p style={{ color: "blue", fontSize: "18px" }}>{ceo}</p>
                <div style={{ maxHeight: "280px", overflow: "auto", border: "1px solid #ccc", padding: "10px" }}>
                 {Object.entries(financeData).map(([key, value]) => {
                   // Skip rendering the "companyOfficers" field
@@ -261,9 +362,21 @@ function Home() {
                   );
                 })}
                 </div>
+                  {showChart && (
+                    <div className="col-md-12 mt-4">
+                      
+                      <RechartsStockChart />
+                    </div>
+                  )}
                </div>
+               
+               
             ) : (
+              <div>
               <p>No market data available.</p>
+              <p>{ceo}</p>
+              </div>
+                  
             )}
         </div>
       </div>
