@@ -44,6 +44,8 @@ const stockSymbols = {
   NVDA:"Nvidia",
   META:"Meta Platforms",
   BABA:"Alibaba",
+  CMCSA:"Comcast",
+  ADBE:"Adobe Systems",
   AMD:"Advanced Micro Devices",
   DIS:"Walt Disney",
   T:"AT&T",
@@ -63,6 +65,7 @@ const stockSymbols = {
   JPM:"JPMorgan Chase & Co.",
   WMT:"Walmart",
   KO:"Coca-Cola",
+  PEP:"PepsiCo",
   CSCO:"Cisco Systems",
   GM:"General Motors",
   MA:"Mastercard",
@@ -187,7 +190,7 @@ function Home() {
             <div style={{ maxHeight: "280px", overflow: "auto", border: "1px solid #ccc", padding: "10px" }}>
               {stockData.reverse().map((dataPoint, index) => (
                 <div key={index}>
-                  <p>{dataPoint.date}&nbsp;&nbsp;  
+                  <p><strong>{dataPoint.date}</strong>&nbsp;&nbsp;  
                      {dataPoint.priceOpen}&nbsp;&nbsp; 
                      {dataPoint.priceHigh}&nbsp;&nbsp; 
                      {dataPoint.priceLow}&nbsp;&nbsp; 
@@ -338,7 +341,7 @@ function Home() {
               </option>
             ))}
           </select>
-          <button onClick={handleFetchStockData}>Fetch Stock Data</button>
+          <button onClick={handleFetchStockData}>Fetch Stock Data (Nasdaq)</button>
              
         </div>
         <div>
