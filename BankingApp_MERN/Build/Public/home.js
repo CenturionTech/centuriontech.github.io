@@ -56,6 +56,8 @@ var stockSymbols = {
   NVDA: "Nvidia",
   META: "Meta Platforms",
   BABA: "Alibaba",
+  CMCSA: "Comcast",
+  ADBE: "Adobe Systems",
   AMD: "Advanced Micro Devices",
   DIS: "Walt Disney",
   T: "AT&T",
@@ -75,6 +77,7 @@ var stockSymbols = {
   JPM: "JPMorgan Chase & Co.",
   WMT: "Walmart",
   KO: "Coca-Cola",
+  PEP: "PepsiCo",
   CSCO: "Cisco Systems",
   GM: "General Motors",
   MA: "Mastercard",
@@ -270,7 +273,7 @@ function Home() {
     }, stockData.reverse().map(function (dataPoint, index) {
       return /*#__PURE__*/React.createElement("div", {
         key: index
-      }, /*#__PURE__*/React.createElement("p", null, dataPoint.date, "\xA0\xA0", dataPoint.priceOpen, "\xA0\xA0", dataPoint.priceHigh, "\xA0\xA0", dataPoint.priceLow, "\xA0\xA0", dataPoint.priceClose));
+      }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, dataPoint.date), "\xA0\xA0", dataPoint.priceOpen, "\xA0\xA0", dataPoint.priceHigh, "\xA0\xA0", dataPoint.priceLow, "\xA0\xA0", dataPoint.priceClose));
     })) : 'No stock data available.');
   };
 
@@ -416,7 +419,7 @@ function Home() {
     }, symbol, " - ", name);
   })), /*#__PURE__*/React.createElement("button", {
     onClick: handleFetchStockData
-  }, "Fetch Stock Data")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", null, "Market Data for ", stockSymbols[selectedStockSymbol]), console.log(financeData), " ", !ApiError && financeData !== null ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+  }, "Fetch Stock Data (Nasdaq)")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h5", null, "Market Data for ", stockSymbols[selectedStockSymbol]), console.log(financeData), " ", !ApiError && financeData !== null ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
     style: {
       color: "blue",
       fontSize: "18px"
